@@ -39,9 +39,11 @@ export const ThemeProvider = ({
     if (theme === "system") {
       const sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       root.classList.toggle(darkModeClass, sys === "dark");
+      root.classList.toggle("light", sys === "light");
       localStorage.removeItem(storageKey);
     } else {
       root.classList.toggle(darkModeClass, theme === "dark");
+      root.classList.toggle("light", theme === "light");
       localStorage.setItem(storageKey, theme);
     }
   }, [theme, darkModeClass, storageKey]);

@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "../tokens/tokens.css";
+@import "../tokens/fonts.css";
+
+@plugin "tailwindcss-animate";
+@plugin "tailwindcss-react-aria-components";
+
+@custom-variant dark (&:where(.dark-mode, .dark-mode *));
+@custom-variant label (& [data-label]);
+@custom-variant focus-input-within (&:has(input:focus));
+
+@theme {
+  --font-body:    'General Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'General Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-md:   1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+  --text-5xl:  3rem;
+
+  --radius-none: 0px;
+  --radius-sm:   0.25rem;
+  --radius-md:   0.5rem;
+  --radius-lg:   0.75rem;
+  --radius-xl:   1rem;
+  --radius-2xl:  1.25rem;
+  --radius-full: 9999px;
+}
+
+@utility scrollbar-hide {
+  &::-webkit-scrollbar { display: none; -webkit-appearance: none; }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html, body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] { -moz-appearance: textfield; }
+input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }

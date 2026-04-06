@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ChevronUp } from '@untitledui/icons';
 import { LogoHologram } from '@/components/logos/Logo';
+import { navItemClass } from '@/components/NavItem';
 import { useTheme } from '@/providers/theme-provider';
 
 const NAV = [
@@ -41,7 +42,6 @@ const NAV = [
 
 export function Sidebar() {
   const { theme, setTheme } = useTheme();
-  const location = useLocation();
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(
     Object.fromEntries(NAV.map((s) => [s.group, true]))
   );
@@ -87,12 +87,12 @@ export function Sidebar() {
 
           return (
             <div key={section.group}>
-              {/* Dotted divider between sections */}
+              {/* Dotted divider between sections — not full width, matches UUI */}
               {index > 0 && (
                 <div
                   style={{
-                    borderTop: '1px dotted var(--border-secondary)',
-                    margin: '12px 16px',
+                    borderTop: '1px dotted var(--border-default)',
+                    margin: '10px 16px 14px',
                   }}
                 />
               )}
@@ -105,7 +105,7 @@ export function Sidebar() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   width: '100%',
-                  padding: '6px 16px',
+                  padding: '4px 16px 8px',
                   fontSize: 11,
                   fontWeight: 600,
                   letterSpacing: '0.08em',
@@ -115,7 +115,6 @@ export function Sidebar() {
                   border: 'none',
                   cursor: 'pointer',
                   fontFamily: 'inherit',
-                  marginBottom: 4,
                 }}
               >
                 {section.group}
@@ -133,42 +132,16 @@ export function Sidebar() {
 
               {/* Nav items */}
               {isOpen && (
-                <div>
-                  {section.items.map((item) => {
-                    const isActive = location.pathname === item.path;
-                    return (
-                      <NavLink
-                        key={item.path}
-                        to={item.path}
-                        style={{
-                          display: 'block',
-                          margin: '1px 8px',
-                          padding: '7px 12px',
-                          fontSize: 14,
-                          fontWeight: isActive ? 500 : 400,
-                          color: isActive ? 'var(--text-primary)' : 'var(--text-tertiary)',
-                          textDecoration: 'none',
-                          borderRadius: 6,
-                          background: isActive ? 'var(--bg-active)' : 'transparent',
-                          transition: 'background 0.1s, color 0.1s',
-                        }}
-                        onMouseEnter={(e) => {
-                          if (!isActive) {
-                            (e.currentTarget as HTMLElement).style.background = 'var(--bg-primary_hover)';
-                            (e.currentTarget as HTMLElement).style.color = 'var(--text-secondary)';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isActive) {
-                            (e.currentTarget as HTMLElement).style.background = 'transparent';
-                            (e.currentTarget as HTMLElement).style.color = 'var(--text-tertiary)';
-                          }
-                        }}
-                      >
-                        {item.label}
-                      </NavLink>
-                    );
-                  })}
+                <div style={{ padding: '0 8px' }}>
+                  {section.items.map((item) => (
+                    <NavLink
+                      key={item.path}
+                      to={item.path}
+                      className={({ isActive }) => navItemClass(isActive)}
+                    >
+                      {item.label}
+                    </NavLink>
+                  ))}
                 </div>
               )}
             </div>

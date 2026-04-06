@@ -1,8 +1,9 @@
 /* =============================================================================
    ZINC DESIGN SYSTEM — TYPOGRAPHY
    Font: General Sans
-   Medium (500): All headings, labels, UI elements
-   Regular (400): Body copy only
+   Regular (400):   Body copy
+   Medium (500):    Display headings
+   Semibold (600):  UI labels, buttons, nav items (≤14px and interactive elements)
    ============================================================================= */
 
 @font-face {
@@ -17,6 +18,14 @@
   font-family: 'General Sans';
   src: url('/fonts/GeneralSans-Medium.ttf') format('truetype');
   font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-Semibold.ttf') format('truetype');
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }

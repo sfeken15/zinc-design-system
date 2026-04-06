@@ -15,11 +15,11 @@ import { cx } from '@/utils/cx';
  */
 export function navItemClass(isActive: boolean, className?: string) {
   return cx(
-    // Layout & shape
-    'block w-full rounded-lg px-3 py-2 text-sm text-left transition duration-100 ease-linear',
+    // Layout & shape — semibold for all nav items per design system spec
+    'block w-full rounded-lg px-3 py-2 text-sm text-left font-semibold transition duration-100 ease-linear',
     // Active state
     isActive
-      ? 'bg-[var(--nav-item-active)] text-[var(--text-primary)] font-medium'
+      ? 'bg-[var(--nav-item-active)] text-[var(--text-primary)]'
       : 'text-[var(--text-tertiary)] hover:bg-[var(--nav-item-hover)] hover:text-[var(--text-secondary)]',
     className,
   );

@@ -25,10 +25,11 @@ const BODY_STYLES = [
 ];
 
 const LABEL_STYLES = [
-  { name: 'Label LG', size: 16, weight: 500, tracking: 'normal', uppercase: false, sample: 'Label large' },
-  { name: 'Label MD', size: 14, weight: 500, tracking: 'normal', uppercase: false, sample: 'Label medium' },
-  { name: 'Label SM', size: 12, weight: 500, tracking: '0.04em', uppercase: false, sample: 'Label small' },
-  { name: 'Overline', size: 12, weight: 500, tracking: '0.08em', uppercase: true, sample: 'Overline text' },
+  { name: 'Label LG / Medium', size: 16, weight: 500, tracking: 'normal', uppercase: false, sample: 'Label large' },
+  { name: 'Label LG / Semibold', size: 16, weight: 600, tracking: 'normal', uppercase: false, sample: 'Label large' },
+  { name: 'Label MD', size: 14, weight: 600, tracking: 'normal', uppercase: false, sample: 'Label medium' },
+  { name: 'Label SM', size: 12, weight: 600, tracking: '0.04em', uppercase: false, sample: 'Label small' },
+  { name: 'Overline', size: 12, weight: 600, tracking: '0.08em', uppercase: true, sample: 'Overline text' },
 ];
 
 function TypeRow({ name, size, weight, sample, tracking = 'normal', uppercase = false }: {
@@ -96,7 +97,7 @@ export function TypographyPage() {
         Typography
       </h1>
       <p style={{ fontSize: 15, color: 'var(--text-secondary)', margin: '0 0 32px' }}>
-        General Sans across all styles. Medium (500) for display and labels, regular (400) for body.
+        General Sans across all styles. Medium (500) for display, semibold (600) for UI labels and interactive elements, regular (400) for body.
       </p>
 
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 40px' }} />
@@ -122,7 +123,7 @@ export function TypographyPage() {
       <SectionHeader
         id="labels"
         title="UI labels"
-        subtitle="General Sans Medium 500 — for labels, tags, and overlines."
+        subtitle="General Sans Semibold 600 — for labels, buttons, nav items, and overlines. Label LG offers both Medium and Semibold variants."
       />
       {LABEL_STYLES.map((s) => (
         <TypeRow key={s.name} {...s} />

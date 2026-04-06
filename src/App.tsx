@@ -22,6 +22,7 @@ import { MultiSelectPage } from '@/docs/pages/multi-select-page';
 import { RadioButtonPage } from '@/docs/pages/radio-button-page';
 import { SelectPage } from '@/docs/pages/select-page';
 import { TooltipPage } from '@/docs/pages/tooltip-page';
+import { IconsPage } from '@/docs/pages/icons-page';
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="typography" element={<TypographyPage />} />
         <Route path="logos" element={<LogosPage />} />
         <Route path="spacing" element={<SpacingPage />} />
+        <Route path="icons" element={<IconsPage />} />
         <Route path="components/avatar" element={<AvatarPage />} />
         <Route path="components/badge" element={<BadgePage />} />
         <Route path="components/badge-group" element={<BadgeGroupPage />} />

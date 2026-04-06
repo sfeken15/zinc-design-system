@@ -12,6 +12,7 @@ const NAV = [
       { label: 'Introduction', path: '/introduction' },
       { label: 'Colors', path: '/colors' },
       { label: 'Typography', path: '/typography' },
+      { label: 'Icons', path: '/icons' },
       { label: 'Logos', path: '/logos' },
       { label: 'Spacing', path: '/spacing' },
     ],

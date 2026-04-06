@@ -2,23 +2,30 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDocsContext } from '@/docs/layout/docs-context';
 import { Breadcrumb } from '@/docs/layout/breadcrumb';
-import { LogoHologram } from '@/components/logos/Logo';
 
 const SECTIONS = [
   { id: 'overview', label: 'Overview' },
+  { id: 'stack', label: 'Tech stack' },
   { id: 'getting-started', label: 'Getting started' },
   { id: 'components', label: 'Components' },
 ];
 
 const COMPONENTS = [
-  { label: 'Button', path: '/components/button', description: 'Four variants, four sizes. Fully rounded.' },
-  { label: 'Input', path: '/components/input', description: 'Text fields with label, hint, and error states.' },
-  { label: 'Textarea', path: '/components/textarea', description: 'Multi-line input with character count.' },
-  { label: 'Tag', path: '/components/tag', description: 'Selectable pill tags for filters and options.' },
-  { label: 'Slider', path: '/components/slider', description: 'Range slider with left/right labels.' },
-  { label: 'Badge', path: '/components/badge', description: 'Six semantic variants for status labeling.' },
-  { label: 'Card', path: '/components/card', description: 'Surface container with active and hover states.' },
-  { label: 'StepDots', path: '/components/stepdots', description: 'Progress indicator for multi-step flows.' },
+  { label: 'Avatar', path: '/components/avatar', description: 'Profile images with status, verified badge, and initials fallback.' },
+  { label: 'Badge', path: '/components/badge', description: 'Semantic status labels in six color variants.' },
+  { label: 'Button', path: '/components/button', description: 'Four variants, four sizes, loading and icon states.' },
+  { label: 'Checkbox', path: '/components/checkbox', description: 'Boolean selection with indeterminate support.' },
+  { label: 'Input', path: '/components/input', description: 'Text fields with label, hint, icon, and error states.' },
+  { label: 'Select', path: '/components/select', description: 'Dropdown and combobox selection with search.' },
+  { label: 'Tag', path: '/components/tag', description: 'Selectable pill tags for filters and categories.' },
+  { label: 'Tooltip', path: '/components/tooltip', description: 'Contextual hints anchored to any element.' },
+];
+
+const STACK = [
+  { label: 'React 19 + TypeScript', description: 'Fully typed components with strict mode enabled.' },
+  { label: 'Tailwind CSS v4', description: 'Utility-first styling with CSS custom property tokens.' },
+  { label: 'React Aria Components', description: 'Accessible primitives for keyboard and screen reader support.' },
+  { label: '1,179 icons', description: 'Untitled UI line-style icon library, tree-shakeable.' },
 ];
 
 export function IntroductionPage() {
@@ -32,11 +39,7 @@ export function IntroductionPage() {
 
   return (
     <div>
-      <Breadcrumb items={[{ label: 'Zinc Design System' }]} />
-
-      <div style={{ marginBottom: 32 }}>
-        <LogoHologram height={32} />
-      </div>
+      <Breadcrumb items={[{ label: 'Introduction' }]} />
 
       <h1
         style={{
@@ -49,12 +52,13 @@ export function IntroductionPage() {
       >
         Zinc Design System
       </h1>
-      <p style={{ fontSize: 15, color: 'var(--text-secondary)', margin: '0 0 40px' }}>
-        The official design system of Explore Joplin — built for consistency, accessibility, and speed.
+      <p style={{ fontSize: 15, color: 'var(--text-secondary)', margin: '0 0 32px' }}>
+        A React component library built for Explore Joplin — consistent, accessible, and ready to ship.
       </p>
 
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 40px' }} />
 
+      {/* ── Overview ── */}
       <div id="overview" style={{ marginBottom: 48 }}>
         <h2
           style={{
@@ -67,11 +71,17 @@ export function IntroductionPage() {
         >
           Overview
         </h2>
-        <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.7, margin: 0 }}>
-          Zinc is a React component library built on React Aria Components for accessibility,
-          styled with Tailwind CSS v4 and a curated set of CSS custom properties. It ships with
-          a graffiti-teal primary palette, a blurple secondary, and zinc neutrals — all wired
-          for dark-first theming with light mode opt-in.
+        <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.75, margin: '0 0 12px' }}>
+          Zinc is the design system that powers Explore Joplin's products. It provides a curated set of
+          React components, design tokens, and guidelines that keep every surface — marketing pages,
+          dashboards, forms — visually cohesive and behaving predictably.
+        </p>
+        <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.75, margin: 0 }}>
+          Every component is built on React Aria Components, so keyboard navigation, focus management,
+          and screen reader announcements are handled out of the box. Styling is done with Tailwind CSS
+          v4 and a layered token system: primitive values (raw zinc, graffiti, blurple scales) feed into
+          semantic aliases (text-primary, bg-surface, border-default) that automatically adapt between
+          dark and light modes.
         </p>
 
         <div
@@ -83,9 +93,9 @@ export function IntroductionPage() {
           }}
         >
           {[
-            { label: 'Primary color', value: 'Graffiti', sub: '#15B79E' },
-            { label: 'Secondary color', value: 'Blurple', sub: '#683DEE' },
-            { label: 'Neutral', value: 'Zinc', sub: '#71717A mid' },
+            { label: 'Primary', value: 'Graffiti Teal', sub: '#15B79E' },
+            { label: 'Secondary', value: 'Blurple', sub: '#683DEE' },
+            { label: 'Neutral', value: 'Zinc', sub: '#71717A' },
           ].map((stat) => (
             <div
               key={stat.label}
@@ -99,24 +109,10 @@ export function IntroductionPage() {
               <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: '0 0 6px' }}>
                 {stat.label}
               </p>
-              <p
-                style={{
-                  fontSize: 18,
-                  fontWeight: 500,
-                  color: 'var(--text-primary)',
-                  margin: '0 0 2px',
-                }}
-              >
+              <p style={{ fontSize: 18, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 2px' }}>
                 {stat.value}
               </p>
-              <p
-                style={{
-                  fontSize: 12,
-                  color: 'var(--text-tertiary)',
-                  margin: 0,
-                  fontFamily: 'var(--font-mono)',
-                }}
-              >
+              <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: 0, fontFamily: 'var(--font-mono)' }}>
                 {stat.sub}
               </p>
             </div>
@@ -124,6 +120,42 @@ export function IntroductionPage() {
         </div>
       </div>
 
+      {/* ── Tech stack ── */}
+      <div id="stack" style={{ marginBottom: 48 }}>
+        <h2
+          style={{
+            fontSize: 20,
+            fontWeight: 500,
+            color: 'var(--text-primary)',
+            margin: '0 0 16px',
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Tech stack
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
+          {STACK.map((item) => (
+            <div
+              key={item.label}
+              style={{
+                padding: '16px 20px',
+                borderRadius: 10,
+                border: '1px solid var(--border-default)',
+                background: 'var(--bg-surface)',
+              }}
+            >
+              <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 4px' }}>
+                {item.label}
+              </p>
+              <p style={{ fontSize: 13, color: 'var(--text-tertiary)', margin: 0, lineHeight: 1.6 }}>
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Getting started ── */}
       <div id="getting-started" style={{ marginBottom: 48 }}>
         <h2
           style={{
@@ -137,7 +169,7 @@ export function IntroductionPage() {
           Getting started
         </h2>
         <p style={{ fontSize: 14, color: 'var(--text-secondary)', margin: '0 0 16px' }}>
-          All components are exported from the package root. Import and use directly:
+          Components are imported directly from their module paths. Use named imports for best tree-shaking:
         </p>
         <pre
           style={{
@@ -150,18 +182,22 @@ export function IntroductionPage() {
             fontFamily: 'var(--font-mono)',
             color: 'var(--text-primary)',
             lineHeight: 1.6,
+            overflowX: 'auto',
           }}
         >
           <code>{`import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-import { Badge } from '@/components/Badge';
+import { Avatar } from '@/components/Avatar';
+import { Home01 } from '@untitledui/icons';
 
-<Button variant="primary">Save changes</Button>
+<Button variant="primary" size="md">Save changes</Button>
 <Input label="Email" placeholder="you@example.com" />
-<Badge label="Success" variant="success" />`}</code>
+<Avatar initials="JD" size="md" status="online" />
+<Home01 className="size-5 text-primary" />`}</code>
         </pre>
       </div>
 
+      {/* ── Components ── */}
       <div id="components">
         <h2
           style={{
@@ -174,13 +210,7 @@ import { Badge } from '@/components/Badge';
         >
           Components
         </h2>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: 12,
-          }}
-        >
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
           {COMPONENTS.map((c) => (
             <button
               key={c.path}
@@ -192,7 +222,7 @@ import { Badge } from '@/components/Badge';
                 background: 'var(--bg-surface)',
                 textAlign: 'left',
                 cursor: 'pointer',
-                transition: 'border-color 0.15s, background 0.15s',
+                transition: 'border-color 100ms linear, background 100ms linear',
                 fontFamily: 'inherit',
               }}
               onMouseEnter={(e) => {
@@ -204,17 +234,10 @@ import { Badge } from '@/components/Badge';
                 (e.currentTarget as HTMLButtonElement).style.background = 'var(--bg-surface)';
               }}
             >
-              <p
-                style={{
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: 'var(--text-primary)',
-                  margin: '0 0 4px',
-                }}
-              >
+              <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 4px' }}>
                 {c.label}
               </p>
-              <p style={{ fontSize: 13, color: 'var(--text-tertiary)', margin: 0 }}>
+              <p style={{ fontSize: 13, color: 'var(--text-tertiary)', margin: 0, lineHeight: 1.6 }}>
                 {c.description}
               </p>
             </button>

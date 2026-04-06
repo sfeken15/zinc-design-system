@@ -9,7 +9,6 @@ const NAV = [
   {
     group: 'Foundations',
     items: [
-      { label: 'Introduction', path: '/introduction' },
       { label: 'Colors', path: '/colors' },
       { label: 'Typography', path: '/typography' },
       { label: 'Icons', path: '/icons' },
@@ -83,6 +82,13 @@ export function Sidebar() {
         style={{ flex: 1, overflowY: 'auto', scrollbarWidth: 'none', padding: '12px 0' }}
         className="[&::-webkit-scrollbar]:hidden"
       >
+        {/* Standalone Introduction link — above the accordion groups */}
+        <div style={{ padding: '0 8px 4px' }}>
+          <NavLink to="/introduction" className={({ isActive }) => navItemClass(isActive)}>
+            Introduction
+          </NavLink>
+        </div>
+
         {NAV.map((section, index) => {
           const isOpen = openSections[section.group];
 

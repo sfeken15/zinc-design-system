@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { ChevronUp } from '@untitledui/icons';
 import { LogoHologram } from '@/components/logos/Logo';
 import { useTheme } from '@/providers/theme-provider';
 
@@ -40,6 +42,13 @@ const NAV = [
 export function Sidebar() {
   const { theme, setTheme } = useTheme();
   const location = useLocation();
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>(
+    Object.fromEntries(NAV.map((s) => [s.group, true]))
+  );
+
+  const toggleSection = (group: string) => {
+    setOpenSections((prev) => ({ ...prev, [group]: !prev[group] }));
+  };
 
   return (
     <aside
@@ -54,63 +63,125 @@ export function Sidebar() {
         display: 'flex',
         flexDirection: 'column',
         zIndex: 50,
-        overflowY: 'auto',
+        overflow: 'hidden',
       }}
     >
-      <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid var(--border-default)' }}>
+      {/* Fixed header — always visible */}
+      <div
+        style={{
+          padding: '20px',
+          borderBottom: '1px solid var(--border-default)',
+          flexShrink: 0,
+        }}
+      >
         <LogoHologram height={20} />
       </div>
 
-      <nav style={{ flex: 1, padding: '16px 0' }}>
-        {NAV.map((section) => (
-          <div key={section.group} style={{ marginBottom: 8 }}>
-            <p
-              style={{
-                fontSize: 11,
-                fontWeight: 500,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                color: 'var(--text-tertiary)',
-                padding: '8px 20px',
-                margin: 0,
-              }}
-            >
-              {section.group}
-            </p>
-            {section.items.map((item) => {
-              const isActive = location.pathname === item.path;
-              return (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
+      {/* Scrollable nav — scrollbar hidden */}
+      <nav
+        style={{ flex: 1, overflowY: 'auto', scrollbarWidth: 'none', padding: '12px 0' }}
+        className="[&::-webkit-scrollbar]:hidden"
+      >
+        {NAV.map((section, index) => {
+          const isOpen = openSections[section.group];
+
+          return (
+            <div key={section.group}>
+              {/* Dotted divider between sections */}
+              {index > 0 && (
+                <div
                   style={{
-                    display: 'block',
-                    padding: '7px 20px',
-                    fontSize: 14,
-                    fontWeight: isActive ? 500 : 400,
-                    color: isActive ? 'var(--text-brand)' : 'var(--text-tertiary)',
-                    textDecoration: 'none',
-                    borderLeft: isActive
-                      ? '2px solid var(--graffiti-500)'
-                      : '2px solid transparent',
-                    transition: 'all 0.15s',
+                    borderTop: '1px dotted var(--border-secondary)',
+                    margin: '12px 16px',
                   }}
-                >
-                  {item.label}
-                </NavLink>
-              );
-            })}
-          </div>
-        ))}
+                />
+              )}
+
+              {/* Accordion section header */}
+              <button
+                onClick={() => toggleSection(section.group)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  padding: '6px 16px',
+                  fontSize: 11,
+                  fontWeight: 600,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: 'var(--text-tertiary)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  marginBottom: 4,
+                }}
+              >
+                {section.group}
+                <ChevronUp
+                  style={{
+                    width: 14,
+                    height: 14,
+                    flexShrink: 0,
+                    color: 'var(--text-quaternary)',
+                    transform: isOpen ? 'rotate(0deg)' : 'rotate(180deg)',
+                    transition: 'transform 0.2s ease',
+                  }}
+                />
+              </button>
+
+              {/* Nav items */}
+              {isOpen && (
+                <div>
+                  {section.items.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    return (
+                      <NavLink
+                        key={item.path}
+                        to={item.path}
+                        style={{
+                          display: 'block',
+                          margin: '1px 8px',
+                          padding: '7px 12px',
+                          fontSize: 14,
+                          fontWeight: isActive ? 500 : 400,
+                          color: isActive ? 'var(--text-primary)' : 'var(--text-tertiary)',
+                          textDecoration: 'none',
+                          borderRadius: 6,
+                          background: isActive ? 'var(--bg-active)' : 'transparent',
+                          transition: 'background 0.1s, color 0.1s',
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!isActive) {
+                            (e.currentTarget as HTMLElement).style.background = 'var(--bg-primary_hover)';
+                            (e.currentTarget as HTMLElement).style.color = 'var(--text-secondary)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!isActive) {
+                            (e.currentTarget as HTMLElement).style.background = 'transparent';
+                            (e.currentTarget as HTMLElement).style.color = 'var(--text-tertiary)';
+                          }
+                        }}
+                      >
+                        {item.label}
+                      </NavLink>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </nav>
 
+      {/* Fixed footer */}
       <div
         style={{
-          padding: '16px 20px',
+          padding: '14px 16px',
           borderTop: '1px solid var(--border-default)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
+          flexShrink: 0,
         }}
       >
         <button

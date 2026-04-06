@@ -117,6 +117,10 @@
     --bg-accent-subtle:    var(--blurple-100);
     --bg-accent-default:   var(--blurple-600);
 
+    /* Navigation items */
+    --nav-item-active:     var(--zinc-200);
+    --nav-item-hover:      var(--zinc-100);
+
     /* Text */
     --text-primary:        var(--zinc-950);
     --text-secondary:      var(--zinc-700);
@@ -266,6 +270,10 @@
     --bg-accent-subtle:    rgba(104, 61, 238, 0.15);
     --bg-accent-default:   var(--blurple-400);
 
+    /* Navigation items */
+    --nav-item-active:     var(--zinc-800);
+    --nav-item-hover:      var(--zinc-900);
+
     --text-primary:        var(--zinc-50);
     --text-secondary:      var(--zinc-300);
     --text-tertiary:       var(--zinc-500);
@@ -374,6 +382,10 @@
     --bg-brand-default:    var(--graffiti-500);
     --bg-brand-hover:      var(--graffiti-700);
     --bg-accent-default:   var(--blurple-600);
+
+    /* Navigation items */
+    --nav-item-active:     var(--zinc-200);
+    --nav-item-hover:      var(--zinc-100);
 
     --text-primary:        var(--zinc-950);
     --text-secondary:      var(--zinc-700);

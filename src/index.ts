@@ -3,6 +3,7 @@ export { Logo, LogoHologram, LogoWhite, LogoBlack } from "@/components/logos/Log
 
 // Components
 export { Avatar } from "@/components/Avatar";
+export { NavItem, navItemClass } from "@/components/NavItem";
 export { Badge } from "@/components/Badge";
 export { BadgeGroup } from "@/components/BadgeGroup";
 export { Button } from "@/components/Button";

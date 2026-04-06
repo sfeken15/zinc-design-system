@@ -89,20 +89,18 @@ export function Sidebar() {
           </NavLink>
         </div>
 
-        {NAV.map((section, index) => {
+        {NAV.map((section) => {
           const isOpen = openSections[section.group];
 
           return (
             <div key={section.group}>
-              {/* Dotted divider between sections — not full width, matches UUI */}
-              {index > 0 && (
-                <div
-                  style={{
-                    borderTop: '1px dotted var(--border-default)',
-                    margin: '10px 16px 14px',
-                  }}
-                />
-              )}
+              {/* Dotted divider before every section group */}
+              <div
+                style={{
+                  borderTop: '1px dotted var(--border-default)',
+                  margin: '10px 16px 14px',
+                }}
+              />
 
               {/* Accordion section header */}
               <button

@@ -1,42 +1,122 @@
-import { TextField, Label, TextArea as AriaTextarea } from "react-aria-components";
+"use client";
+
+import type { ReactNode, Ref } from "react";
+import React from "react";
+import type { TextAreaProps as AriaTextAreaProps, TextFieldProps as AriaTextFieldProps } from "react-aria-components";
+import { TextArea as AriaTextArea, TextField as AriaTextField } from "react-aria-components";
+import { HintText } from "@/components/internal/hint-text";
+import { Label } from "@/components/internal/label";
 import { cx } from "@/utils/cx";
 
-interface TextareaProps {
-  label?: string;
-  placeholder?: string;
-  hint?: string;
-  error?: string;
-  value?: string;
-  onChange?: (value: string) => void;
-  rows?: number;
-  maxLength?: number;
-  showCount?: boolean;
-  className?: string;
+// Creates a data URL for an SVG resize handle with a given color.
+const getResizeHandleBg = (color: string) => {
+    return `url(data:image/svg+xml;base64,${btoa(`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 2L2 10" stroke="${color}" stroke-linecap="round"/><path d="M11 7L7 11" stroke="${color}" stroke-linecap="round"/></svg>`)})`;
+};
+
+interface TextAreaBaseProps extends AriaTextAreaProps {
+    ref?: Ref<HTMLTextAreaElement>;
+    size?: "sm" | "md";
 }
 
-export function Textarea({ label, placeholder, hint, error, value, onChange, rows = 4, maxLength, showCount = false, className = "" }: TextareaProps) {
-  return (
-    <TextField value={value} onChange={onChange} isInvalid={!!error}
-      className={cx("flex flex-col gap-1.5", className)}>
-      {label && <Label className="text-sm font-medium text-[var(--text-secondary)]">{label}</Label>}
-      <AriaTextarea placeholder={placeholder} rows={rows} maxLength={maxLength}
-        className={cx(
-          "w-full rounded-2xl px-5 py-4 text-base leading-relaxed",
-          "bg-[var(--input-bg)] text-[var(--input-text)]",
-          "border border-[var(--input-border)]",
-          "placeholder:text-[var(--input-placeholder)]",
-          "outline-none transition-all duration-200 resize-none",
-          "focus:border-[var(--input-border-focus)] focus:bg-[var(--input-bg-focus)]",
-          error && "border-[var(--color-error)]"
-        )}
-      />
-      <div className="flex justify-between">
-        {hint && !error && <p className="text-xs text-[var(--text-tertiary)]">{hint}</p>}
-        {error && <p className="text-xs text-[var(--color-error-text)]">{error}</p>}
-        {showCount && maxLength && value !== undefined && (
-          <p className="text-xs text-[var(--text-tertiary)] ml-auto">{value.length}/{maxLength}</p>
-        )}
-      </div>
-    </TextField>
-  );
+export const TextAreaBase = ({ className, size = "md", ...props }: TextAreaBaseProps) => {
+    return (
+        <AriaTextArea
+            {...props}
+            style={
+                {
+                    "--resize-handle-bg": getResizeHandleBg("#D5D7DA"),
+                    "--resize-handle-bg-dark": getResizeHandleBg("#373A41"),
+                } as React.CSSProperties
+            }
+            className={(state) =>
+                cx(
+                    "w-full scroll-py-3 rounded-lg bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-[var(--shadow-xs)] ring-1 ring-[var(--border-default)] transition duration-100 ease-linear ring-inset placeholder:text-[var(--text-[var(--text-tertiary)])] autofill:rounded-lg autofill:text-[var(--text-primary)] focus:outline-hidden",
+
+                    size === "sm" && "p-3 text-sm",
+                    size === "md" && "px-3.5 py-3 text-md",
+
+                    // Resize handle
+                    "[&::-webkit-resizer]:bg-(image:--resize-handle-bg) [&::-webkit-resizer]:bg-contain dark:[&::-webkit-resizer]:bg-(image:--resize-handle-bg-dark)",
+
+                    state.isFocused && !state.isDisabled && "ring-2 ring-[var(--graffiti-500)]",
+                    state.isDisabled && "cursor-not-allowed opacity-50",
+                    state.isInvalid && "ring-[var(--color-error)]",
+                    state.isInvalid && state.isFocused && "ring-2 ring-[var(--color-error)]",
+
+                    typeof className === "function" ? className(state) : className,
+                )
+            }
+        />
+    );
+};
+
+TextAreaBase.displayName = "TextAreaBase";
+
+interface TextFieldProps extends AriaTextFieldProps {
+    /** Label text for the textarea */
+    label?: string;
+    /** Helper text displayed below the textarea */
+    hint?: ReactNode;
+    /** Tooltip message displayed after the label. */
+    tooltip?: string;
+    /** Textarea size. */
+    size?: TextAreaBaseProps["size"];
+    /** Class name for the textarea wrapper */
+    textAreaClassName?: TextAreaBaseProps["className"];
+    /** Ref for the textarea wrapper */
+    ref?: Ref<HTMLDivElement>;
+    /** Ref for the textarea */
+    textAreaRef?: TextAreaBaseProps["ref"];
+    /** Whether to hide required indicator from label. */
+    hideRequiredIndicator?: boolean;
+    /** Placeholder text. */
+    placeholder?: string;
+    /** Visible height of textarea in rows . */
+    rows?: number;
+    /** Visible width of textarea in columns. */
+    cols?: number;
 }
+
+export const TextArea = ({
+    label,
+    hint,
+    tooltip,
+    textAreaRef,
+    hideRequiredIndicator,
+    textAreaClassName,
+    placeholder,
+    className,
+    rows,
+    cols,
+    size = "md",
+    ...props
+}: TextFieldProps) => {
+    return (
+        <AriaTextField
+            {...props}
+            className={(state) =>
+                cx("group flex h-max w-full flex-col items-start justify-start gap-1.5", typeof className === "function" ? className(state) : className)
+            }
+        >
+            {({ isInvalid, isRequired }) => (
+                <>
+                    {label && (
+                        <Label isRequired={hideRequiredIndicator ? !hideRequiredIndicator : isRequired} tooltip={tooltip}>
+                            {label}
+                        </Label>
+                    )}
+
+                    <TextAreaBase placeholder={placeholder} className={textAreaClassName} ref={textAreaRef} rows={rows} cols={cols} size={size} />
+
+                    {hint && (
+                        <HintText isInvalid={isInvalid} size={size}>
+                            {hint}
+                        </HintText>
+                    )}
+                </>
+            )}
+        </AriaTextField>
+    );
+};
+
+TextArea.displayName = "TextArea";

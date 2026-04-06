@@ -4,7 +4,7 @@ import { Breadcrumb } from '@/docs/layout/breadcrumb';
 import { Preview } from '@/docs/components/preview';
 import { PropsTable } from '@/docs/components/props-table';
 import { SectionHeader } from '@/docs/components/section-header';
-import { Textarea } from '@/components/Textarea';
+import { TextArea as Textarea } from '@/components/Textarea';
 
 const SECTIONS = [
   { id: 'default', label: 'Default' },
@@ -18,12 +18,10 @@ const PROPS = [
   { name: 'label', type: 'string', default: '—', description: 'Field label displayed above the textarea' },
   { name: 'placeholder', type: 'string', default: '—', description: 'Placeholder text' },
   { name: 'hint', type: 'string', default: '—', description: 'Helper text below the textarea' },
-  { name: 'error', type: 'string', default: '—', description: 'Error message — sets invalid state' },
+  { name: 'isInvalid', type: 'boolean', default: 'false', description: 'Marks the textarea as invalid' },
   { name: 'value', type: 'string', default: '—', description: 'Controlled value' },
   { name: 'onChange', type: '(value: string) => void', default: '—', description: 'Change handler' },
-  { name: 'rows', type: 'number', default: '4', description: 'Number of visible text rows' },
-  { name: 'maxLength', type: 'number', default: '—', description: 'Maximum character count' },
-  { name: 'showCount', type: 'boolean', default: 'false', description: 'Show character count (requires maxLength and value)' },
+  { name: 'rows', type: 'number', default: '—', description: 'Number of visible text rows' },
 ];
 
 function CountedTextarea() {
@@ -36,8 +34,7 @@ function CountedTextarea() {
         value={val}
         onChange={setVal}
         rows={3}
-        maxLength={200}
-        showCount
+        hint={`${val.length}/200 characters`}
       />
     </div>
   );
@@ -113,8 +110,7 @@ export function TextareaPage() {
   value={val}
   onChange={setVal}
   rows={3}
-  maxLength={200}
-  showCount
+  hint={\`\${val.length}/200 characters\`}
 />`}
       />
 
@@ -125,14 +121,16 @@ export function TextareaPage() {
             <Textarea
               label="Bio"
               placeholder="Tell us about yourself..."
-              error="Bio is required."
+              isInvalid
+              hint="Bio is required."
             />
           </div>
         }
         code={`<Textarea
   label="Bio"
   placeholder="Tell us about yourself..."
-  error="Bio is required."
+  isInvalid
+  hint="Bio is required."
 />`}
       />
 

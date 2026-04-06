@@ -18,7 +18,7 @@ const PROPS = [
   { name: 'label', type: 'string', default: '—', description: 'Field label displayed above the input' },
   { name: 'placeholder', type: 'string', default: '—', description: 'Placeholder text' },
   { name: 'hint', type: 'string', default: '—', description: 'Helper text displayed below the input' },
-  { name: 'error', type: 'string', default: '—', description: 'Error message — also sets invalid state' },
+  { name: 'isInvalid', type: 'boolean', default: 'false', description: 'Marks the input as invalid' },
   { name: 'value', type: 'string', default: '—', description: 'Controlled value' },
   { name: 'onChange', type: '(value: string) => void', default: '—', description: 'Change handler' },
   { name: 'type', type: 'string', default: '"text"', description: 'HTML input type' },
@@ -102,7 +102,8 @@ export function InputPage() {
               label="Email"
               placeholder="you@example.com"
               value="not-an-email"
-              error="Please enter a valid email address."
+              isInvalid
+              hint="Please enter a valid email address."
             />
           </div>
         }
@@ -110,7 +111,8 @@ export function InputPage() {
   label="Email"
   placeholder="you@example.com"
   value="not-an-email"
-  error="Please enter a valid email address."
+  isInvalid
+  hint="Please enter a valid email address."
 />`}
       />
 

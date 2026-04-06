@@ -74,6 +74,25 @@ const AVATAR_CONTROLS = [
     key: 'rounded',
     label: 'Rounded',
   },
+  {
+    type: 'toggle' as const,
+    key: 'showName',
+    label: 'Show name',
+  },
+  {
+    type: 'toggle' as const,
+    key: 'showSubLabel',
+    label: 'Show sub-label',
+  },
+  {
+    type: 'button-group' as const,
+    key: 'layout',
+    label: 'Layout',
+    options: [
+      { label: 'Horizontal', value: 'horizontal' },
+      { label: 'Vertical', value: 'vertical' },
+    ],
+  },
 ];
 
 const AVATAR_DEFAULTS = {
@@ -83,20 +102,41 @@ const AVATAR_DEFAULTS = {
   verified: false,
   border: false,
   rounded: true,
+  showName: true,
+  showSubLabel: true,
+  name: 'Jane Doe',
+  subLabel: 'jane@example.com',
+  layout: 'horizontal',
 };
 
 const avatarCodeTemplate = (v: Record<string, any>) => {
-  const props: string[] = [];
-  if (v.initials) props.push(`initials="${v.initials}"`);
-  if (v.size !== 'md') props.push(`size="${v.size}"`);
-  if (v.status !== 'none') props.push(`status="${v.status}"`);
-  if (v.verified) props.push('verified');
-  if (v.border) props.push('border');
-  if (!v.rounded) props.push('rounded={false}');
+  const avatarProps = [
+    `  initials="${v.initials}"`,
+    `  size="${v.size}"`,
+    v.status !== 'none' ? `  status="${v.status}"` : null,
+  ].filter(Boolean).join('\n');
 
-  if (props.length === 0) return '<Avatar />';
-  if (props.length <= 2) return `<Avatar ${props.join(' ')} />`;
-  return `<Avatar\n${props.map(p => `  ${p}`).join('\n')}\n/>`;
+  if (!v.showName) {
+    return `<Avatar\n${avatarProps}\n/>`;
+  }
+
+  const isVertical = v.layout === 'vertical';
+  const gapClass = v.size === 'xl' || v.size === '2xl' ? 'gap-4' : 'gap-3';
+  const flexDir = isVertical ? 'flex-col items-center' : 'items-center';
+
+  return `<div className="flex ${flexDir} ${gapClass}">
+  <Avatar
+${avatarProps}
+  />
+  <div className="flex flex-col${isVertical ? ' items-center' : ''}">
+    <span className="text-sm font-medium text-primary">
+      ${v.name}
+    </span>${v.showSubLabel ? `
+    <span className="text-sm text-tertiary">
+      ${v.subLabel}
+    </span>` : ''}
+  </div>
+</div>`;
 };
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -130,14 +170,50 @@ export function AvatarPage() {
         codeTemplate={avatarCodeTemplate}
       >
         {(v) => (
-          <Avatar
-            initials={v.initials || 'JD'}
-            size={v.size}
-            status={v.status === 'none' ? undefined : v.status}
-            verified={v.verified}
-            border={v.border}
-            rounded={v.rounded}
-          />
+          <div style={{
+            display: 'flex',
+            flexDirection: v.layout === 'vertical' ? 'column' : 'row',
+            alignItems: 'center',
+            gap: v.size === 'xl' || v.size === '2xl' ? 16 : 12,
+          }}>
+            <Avatar
+              initials={v.initials || 'JD'}
+              size={v.size}
+              status={v.status === 'none' ? undefined : v.status}
+              verified={v.verified}
+              border={v.border}
+              rounded={v.rounded}
+            />
+            {v.showName && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: v.layout === 'vertical' ? 'center' : undefined,
+                gap: 1,
+              }}>
+                <span style={{
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: 'var(--text-primary)',
+                  fontFamily: 'var(--font-body)',
+                  lineHeight: 1.5,
+                }}>
+                  {v.name}
+                </span>
+                {v.showSubLabel && (
+                  <span style={{
+                    fontSize: 14,
+                    fontWeight: 400,
+                    color: 'var(--text-tertiary)',
+                    fontFamily: 'var(--font-body)',
+                    lineHeight: 1.5,
+                  }}>
+                    {v.subLabel}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
         )}
       </Configurator>
 

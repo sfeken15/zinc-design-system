@@ -5,6 +5,11 @@ import { Preview } from '@/docs/components/preview';
 import { PropsTable } from '@/docs/components/props-table';
 import { SectionHeader } from '@/docs/components/section-header';
 import { Select } from '@/components/Select';
+import { NativeSelect } from '@/components/base/select/select-native';
+import { TagSelectBase } from '@/components/base/select/tag-select';
+import { SelectItem } from '@/components/base/select/select-item';
+import { useListData } from 'react-stately';
+import type { SelectItemType } from '@/components/base/select/select-shared';
 
 const SECTIONS = [
   { id: 'default', label: 'Default' },
@@ -12,6 +17,8 @@ const SECTIONS = [
   { id: 'sizes', label: 'Sizes' },
   { id: 'combobox', label: 'ComboBox' },
   { id: 'props', label: 'Props' },
+  { id: 'native-select', label: 'Native select' },
+  { id: 'tag-select', label: 'Tag select' },
 ];
 
 const PROPS = [
@@ -156,6 +163,122 @@ export function SelectPage() {
 
       <SectionHeader id="props" title="Select.Item Props (SelectItemType)" />
       <PropsTable props={ITEM_TYPES} />
+
+      <hr style={{ border: 'none', borderTop: '1px dotted var(--border-default)', margin: '48px 0' }} />
+
+      <SectionHeader id="native-select" title="Native select" subtitle="A styled native HTML select element. Use for maximum browser compatibility or when OS-native dropdown behavior is required." />
+      <Preview
+        preview={
+          <div style={{ width: '100%', maxWidth: 320, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <NativeSelect
+              label="Country"
+              options={[
+                { label: 'Select a country...', value: '' },
+                { label: 'United States', value: 'us' },
+                { label: 'Canada', value: 'ca' },
+                { label: 'United Kingdom', value: 'uk' },
+                { label: 'Australia', value: 'au' },
+              ]}
+            />
+            <NativeSelect
+              label="Role (disabled)"
+              disabled
+              options={[{ label: 'Admin', value: 'admin' }]}
+            />
+          </div>
+        }
+        code={`import { NativeSelect } from '@/components/base/select/select-native';
+
+<NativeSelect
+  label="Country"
+  options={[
+    { label: 'Select a country...', value: '' },
+    { label: 'United States', value: 'us' },
+    { label: 'Canada', value: 'ca' },
+    { label: 'United Kingdom', value: 'uk' },
+  ]}
+/>
+
+{/* Disabled */}
+<NativeSelect label="Role" disabled options={[{ label: 'Admin', value: 'admin' }]} />`}
+      />
+
+      <hr style={{ border: 'none', borderTop: '1px dotted var(--border-default)', margin: '48px 0' }} />
+
+      <SectionHeader id="tag-select" title="Tag select" subtitle="A multi-select component that displays selected values as removable tag pills inside the input field." />
+      <Preview
+        preview={<TagSelectDemo />}
+        code={`import { TagSelectBase } from '@/components/base/select/tag-select';
+import { SelectItem } from '@/components/base/select/select-item';
+import { useListData } from 'react-stately';
+import type { SelectItemType } from '@/components/base/select/select-shared';
+
+const allItems: SelectItemType[] = [
+  { id: '1', label: 'React' },
+  { id: '2', label: 'TypeScript' },
+  { id: '3', label: 'Tailwind CSS' },
+  { id: '4', label: 'Vite' },
+  { id: '5', label: 'Next.js' },
+];
+
+function TagSelectDemo() {
+  const selectedItems = useListData<SelectItemType>({
+    initialItems: [
+      { id: '1', label: 'React' },
+      { id: '2', label: 'TypeScript' },
+    ],
+  });
+
+  return (
+    <TagSelectBase
+      label="Technologies"
+      placeholder="Search..."
+      items={allItems}
+      selectedItems={selectedItems}
+    >
+      {(item) => (
+        <SelectItem id={item.id} textValue={item.label ?? ''}>
+          {item.label}
+        </SelectItem>
+      )}
+    </TagSelectBase>
+  );
+}`}
+      />
+    </div>
+  );
+}
+
+const TAG_ITEMS: SelectItemType[] = [
+  { id: '1', label: 'React' },
+  { id: '2', label: 'TypeScript' },
+  { id: '3', label: 'Tailwind CSS' },
+  { id: '4', label: 'Vite' },
+  { id: '5', label: 'Next.js' },
+];
+
+function TagSelectDemo() {
+  const selectedItems = useListData<SelectItemType>({
+    initialItems: [
+      { id: '1', label: 'React' },
+      { id: '2', label: 'TypeScript' },
+    ],
+  });
+
+  return (
+    <div style={{ width: '100%', maxWidth: 360 }}>
+      <TagSelectBase
+        label="Technologies"
+        placeholder="Search..."
+        items={TAG_ITEMS}
+        selectedItems={selectedItems}
+      >
+        {(item) => (
+          <SelectItem id={item.id} textValue={item.label ?? ''}>
+            {item.label}
+          </SelectItem>
+        )}
+      </TagSelectBase>
     </div>
   );
 }

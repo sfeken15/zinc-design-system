@@ -24,6 +24,7 @@ const PROPS = [
   { name: 'imageAlt', type: 'string', default: '""', description: 'Alt text for the image' },
   { name: 'excerpt', type: 'string', default: '—', description: 'Short description shown below title' },
   { name: 'tag', type: 'string', default: '—', description: 'Category tag shown in the footer' },
+  { name: 'tagColor', type: '"brand" | "gray" | "success" | "warning" | "error" | "blue" | ...', default: '"brand"', description: 'Badge color for the tag. Accepts any BadgeColors value.' },
   { name: 'size', type: '"sm" | "md" | "lg"', default: '"md"', description: 'Controls image height and text sizes' },
   { name: 'onClick', type: '() => void', default: '—', description: 'Called when the image or title is clicked' },
   { name: 'onSave', type: '() => void', default: '—', description: 'Called when the heart icon is clicked' },
@@ -36,7 +37,26 @@ const PROPS = [
 const CARD_CONTROLS = [
   { type: 'text' as const, key: 'title', label: 'Title', placeholder: 'Article title...' },
   { type: 'text' as const, key: 'excerpt', label: 'Excerpt', placeholder: 'Short description...' },
-  { type: 'text' as const, key: 'tag', label: 'Tag', placeholder: 'Local Guide' },
+  { type: 'text' as const, key: 'tag', label: 'Tag label', placeholder: 'Local Guide' },
+  {
+    type: 'select' as const,
+    key: 'tagColor',
+    label: 'Badge color',
+    options: [
+      { label: 'Brand', value: 'brand' },
+      { label: 'Gray', value: 'gray' },
+      { label: 'Success', value: 'success' },
+      { label: 'Warning', value: 'warning' },
+      { label: 'Error', value: 'error' },
+      { label: 'Blue', value: 'blue' },
+      { label: 'Indigo', value: 'indigo' },
+      { label: 'Purple', value: 'purple' },
+      { label: 'Pink', value: 'pink' },
+      { label: 'Orange', value: 'orange' },
+      { label: 'Sky', value: 'sky' },
+      { label: 'Slate', value: 'slate' },
+    ],
+  },
   { type: 'toggle' as const, key: 'showImage', label: 'Show image' },
   { type: 'toggle' as const, key: 'showExcerpt', label: 'Show excerpt' },
   { type: 'toggle' as const, key: 'isSaved', label: 'Saved state' },
@@ -56,6 +76,7 @@ const CARD_DEFAULTS = {
   title: "The Best Coffee Shops in Joplin, Missouri — Ranked by a Local",
   excerpt: "From the classics on Main Street to the hidden gems you'd only know about if you live here.",
   tag: 'Local Guide',
+  tagColor: 'brand',
   showImage: true,
   showExcerpt: true,
   isSaved: false,
@@ -68,6 +89,7 @@ const cardCodeTemplate = (v: Record<string, any>) => {
   lines.push(`  title="${v.title}"`);
   if (v.showExcerpt && v.excerpt) lines.push(`  excerpt="${v.excerpt}"`);
   if (v.tag) lines.push(`  tag="${v.tag}"`);
+  if (v.tag && v.tagColor !== 'brand') lines.push(`  tagColor="${v.tagColor}"`);
   lines.push(`  size="${v.size}"`);
   if (v.isSaved) lines.push(`  isSaved`);
   lines.push(`  onClick={() => navigate('/article')}`);
@@ -167,6 +189,7 @@ export function MediaCardPage() {
               title={v.title}
               excerpt={v.showExcerpt ? v.excerpt : undefined}
               tag={v.tag}
+              tagColor={v.tagColor}
               size={v.size}
               isSaved={v.isSaved}
               onClick={() => {}}

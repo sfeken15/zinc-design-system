@@ -1,9 +1,12 @@
 import { cx } from '@/utils/cx';
+import { Badge } from '@/components/base/badges/badges';
+import type { BadgeColors } from '@/components/base/badges/badge-types';
 
 interface ZincCardMediaProps {
   image?: string;
   imageAlt?: string;
   tag?: string;
+  tagColor?: BadgeColors;
   title: string;
   excerpt?: string;
   size?: 'sm' | 'md' | 'lg';
@@ -23,6 +26,7 @@ export function ZincCardMedia({
   image,
   imageAlt = '',
   tag,
+  tagColor = 'brand',
   title,
   excerpt,
   size = 'md',
@@ -182,27 +186,10 @@ export function ZincCardMedia({
           borderTop: '1px solid var(--border-subtle)',
         }}
       >
-        {/* Tag left — inline pill matching tag token system */}
+        {/* Tag left — Badge component */}
         <div>
           {tag ? (
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: '2px 8px',
-                fontSize: 12,
-                fontWeight: 500,
-                fontFamily: 'var(--font-body)',
-                color: 'var(--tag-text)',
-                background: 'var(--bg-subtle)',
-                border: '1px solid var(--tag-border)',
-                borderRadius: 6,
-                lineHeight: 1.6,
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {tag}
-            </span>
+            <Badge type="color" size="sm" color={tagColor}>{tag}</Badge>
           ) : (
             <div style={{ width: 4 }} />
           )}

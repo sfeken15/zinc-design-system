@@ -1,56 +1,89 @@
 @import "tailwindcss";
 @import "../tokens/tokens.css";
 @import "../tokens/fonts.css";
+@import "./theme.css";
+@import "./typography.css";
 
-@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
 @plugin "tailwindcss-react-aria-components";
+@plugin "tailwindcss-animate";
 
 @custom-variant dark (&:where(.dark-mode, .dark-mode *));
 @custom-variant label (& [data-label]);
 @custom-variant focus-input-within (&:has(input:focus));
 
-@theme {
-  --font-body:    'General Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'General Sans', system-ui, -apple-system, sans-serif;
-  --font-mono:    'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
-
-  --text-xs:   0.75rem;
-  --text-sm:   0.875rem;
-  --text-md:   1rem;
-  --text-lg:   1.125rem;
-  --text-xl:   1.25rem;
-  --text-2xl:  1.5rem;
-  --text-3xl:  1.875rem;
-  --text-4xl:  2.25rem;
-  --text-5xl:  3rem;
-
-  --radius-none: 0px;
-  --radius-sm:   0.25rem;
-  --radius-md:   0.5rem;
-  --radius-lg:   0.75rem;
-  --radius-xl:   1rem;
-  --radius-2xl:  1.25rem;
-  --radius-full: 9999px;
-}
-
 @utility scrollbar-hide {
-  &::-webkit-scrollbar { display: none; -webkit-appearance: none; }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+    /* For Webkit-based browsers (Chrome, Safari and Opera) */
+    &::-webkit-scrollbar {
+        display: none;
+        -webkit-appearance: none;
+    }
+
+    /* For IE, Edge and Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
-html, body {
-  font-family: var(--font-body);
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@utility transition-inherit-all {
+    transition-property: inherit;
+    transition-duration: inherit;
+    transition-timing-function: inherit;
 }
 
+html,
+body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-variant-ligatures: contextual;
+    font-variant-ligatures: contextual;
+    -webkit-font-kerning: normal;
+    font-kerning: normal;
+}
+
+/* Hide the default expand arrow on Safari.  */
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Hide default arrows from number inputs. */
+/* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
-input[type="number"] { -moz-appearance: textfield; }
-input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+/* Hide the default clear button (X) from search inputs. */
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+/* Hide the default outline on chart elements. */
+.recharts-surface,
+.recharts-surface g,
+.recharts-surface path {
+    outline: none;
+}
+
+/* =============================================================================
+   ZINC BRAND OVERRIDES — Map UUI brand tokens to Graffiti teal
+   ============================================================================= */
+:root {
+  --color-brand-25:  #F0FDFB;
+  --color-brand-50:  #CCFBEF;
+  --color-brand-100: #99F6E0;
+  --color-brand-200: #5FE9D0;
+  --color-brand-300: #2ED3B7;
+  --color-brand-400: #15B79E;
+  --color-brand-500: #0E9384;
+  --color-brand-600: #107569;
+  --color-brand-700: #125D56;
+  --color-brand-800: #134E48;
+  --color-brand-900: #134140;
+  --color-brand-950: #042F2E;
+}

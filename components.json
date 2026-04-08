@@ -1,0 +1,16 @@
+{
+  "$schema": "https://untitledui.com/schema/components.json",
+  "style": "default",
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "brand",
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/utils",
+    "hooks": "@/hooks",
+    "ui": "@/components/ui"
+  }
+}

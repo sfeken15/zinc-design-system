@@ -1,53 +1,64 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ChevronUp, Moon01, Sun } from '@untitledui/icons';
+import { ChevronUp, Moon01, Sun, Palette, Star01, Image01, Ruler, Type01 } from '@untitledui/icons';
 import { LogoHologram, LogoBlack } from '@/components/logos/Logo';
 import { navItemClass } from '@/components/NavItem';
 import { useTheme } from '@/providers/theme-provider';
+import type { FC } from 'react';
 
-const NAV = [
+interface NavItem {
+  label: string;
+  path: string;
+  icon?: FC<{ style?: React.CSSProperties; className?: string }>;
+}
+
+interface NavGroup {
+  group: string;
+  items: NavItem[];
+}
+
+const NAV: NavGroup[] = [
   {
     group: 'Foundations',
     items: [
-      { label: 'Colors', path: '/colors' },
-      { label: 'Icons', path: '/icons' },
-      { label: 'Logos', path: '/logos' },
-      { label: 'Spacing', path: '/spacing' },
-      { label: 'Typography', path: '/typography' },
+      { label: 'Colors',      path: '/colors',      icon: Palette },
+      { label: 'Icons',       path: '/icons',       icon: Star01 },
+      { label: 'Logos',       path: '/logos',       icon: Image01 },
+      { label: 'Spacing',     path: '/spacing',     icon: Ruler },
+      { label: 'Typography',  path: '/typography',  icon: Type01 },
+    ],
+  },
+  {
+    group: 'Custom Components',
+    items: [
+      { label: 'Media card', path: '/custom/media-card' },
     ],
   },
   {
     group: 'Components',
     items: [
-      { label: 'Avatar', path: '/components/avatar' },
-      { label: 'Badge', path: '/components/badge' },
-      { label: 'BadgeGroup', path: '/components/badge-group' },
-      { label: 'Button', path: '/components/button' },
-      { label: 'ButtonGroup', path: '/components/button-group' },
-      { label: 'Card', path: '/components/card' },
-      { label: 'Checkbox', path: '/components/checkbox' },
-      { label: 'Dropdown', path: '/components/dropdown' },
+      { label: 'Avatar',        path: '/components/avatar' },
+      { label: 'Badge',         path: '/components/badge' },
+      { label: 'BadgeGroup',    path: '/components/badge-group' },
+      { label: 'Button',        path: '/components/button' },
+      { label: 'ButtonGroup',   path: '/components/button-group' },
+      { label: 'Card',          path: '/components/card' },
+      { label: 'Checkbox',      path: '/components/checkbox' },
+      { label: 'Dropdown',      path: '/components/dropdown' },
       { label: 'Featured icon', path: '/components/featured-icon' },
-      { label: 'File upload', path: '/components/file-upload' },
-      { label: 'Form', path: '/components/form' },
-      { label: 'Input', path: '/components/input' },
-      { label: 'MultiSelect', path: '/components/multi-select' },
-      { label: 'Progress', path: '/components/progress' },
-      { label: 'RadioButton', path: '/components/radio-button' },
-      { label: 'Select', path: '/components/select' },
-      { label: 'Slider', path: '/components/slider' },
-      { label: 'StepDots', path: '/components/stepdots' },
-      { label: 'Tag', path: '/components/tag' },
-      { label: 'Textarea', path: '/components/textarea' },
-      { label: 'Toggle', path: '/components/toggle' },
-      { label: 'Tooltip', path: '/components/tooltip' },
-    ],
-  },
-  {
-    group: 'Custom Components',
-    dividerAbove: true,
-    items: [
-      { label: 'Media card', path: '/custom/media-card' },
+      { label: 'File upload',   path: '/components/file-upload' },
+      { label: 'Form',          path: '/components/form' },
+      { label: 'Input',         path: '/components/input' },
+      { label: 'MultiSelect',   path: '/components/multi-select' },
+      { label: 'Progress',      path: '/components/progress' },
+      { label: 'RadioButton',   path: '/components/radio-button' },
+      { label: 'Select',        path: '/components/select' },
+      { label: 'Slider',        path: '/components/slider' },
+      { label: 'StepDots',      path: '/components/stepdots' },
+      { label: 'Tag',           path: '/components/tag' },
+      { label: 'Textarea',      path: '/components/textarea' },
+      { label: 'Toggle',        path: '/components/toggle' },
+      { label: 'Tooltip',       path: '/components/tooltip' },
     ],
   },
 ];
@@ -142,19 +153,12 @@ export function Sidebar() {
 
           return (
             <div key={section.group}>
-              {/* Solid divider for custom sections, dotted for standard groups */}
+              {/* Dotted divider — consistent for all groups */}
               <div
-                style={
-                  (section as any).dividerAbove
-                    ? {
-                        borderTop: '1px solid var(--border-default)',
-                        margin: '14px 0 14px',
-                      }
-                    : {
-                        borderTop: '1px dotted var(--border-default)',
-                        margin: '10px 16px 14px',
-                      }
-                }
+                style={{
+                  borderTop: '1px dotted var(--border-default)',
+                  margin: '10px 16px 14px',
+                }}
               />
 
               {/* Accordion section header */}
@@ -166,11 +170,11 @@ export function Sidebar() {
                   justifyContent: 'space-between',
                   width: '100%',
                   padding: '4px 16px 8px',
-                  fontSize: 11,
+                  fontSize: 12,
                   fontWeight: 600,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  color: 'var(--text-tertiary)',
+                  color: 'var(--text-primary)',
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
@@ -183,7 +187,7 @@ export function Sidebar() {
                     width: 14,
                     height: 14,
                     flexShrink: 0,
-                    color: 'var(--text-quaternary)',
+                    color: 'var(--text-tertiary)',
                     transform: isOpen ? 'rotate(0deg)' : 'rotate(180deg)',
                     transition: 'transform 0.2s ease',
                   }}
@@ -193,22 +197,31 @@ export function Sidebar() {
               {/* Nav items */}
               {isOpen && (
                 <div style={{ padding: '0 8px' }}>
-                  {section.items.map((item) => (
-                    <NavLink
-                      key={item.path}
-                      to={item.path}
-                      className={({ isActive }) => navItemClass(isActive)}
-                    >
-                      {item.label}
-                    </NavLink>
-                  ))}
+                  {section.items.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <NavLink
+                        key={item.path}
+                        to={item.path}
+                        className={({ isActive }) => navItemClass(isActive)}
+                      >
+                        {Icon ? (
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                            <Icon style={{ width: 15, height: 15, flexShrink: 0, opacity: 0.7 }} />
+                            {item.label}
+                          </span>
+                        ) : (
+                          item.label
+                        )}
+                      </NavLink>
+                    );
+                  })}
                 </div>
               )}
             </div>
           );
         })}
       </nav>
-
     </aside>
   );
 }

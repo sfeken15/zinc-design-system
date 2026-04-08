@@ -42,7 +42,7 @@ export default function App() {
         <Route path="logos" element={<LogosPage />} />
         <Route path="spacing" element={<SpacingPage />} />
         <Route path="icons" element={<IconsPage />} />
-        <Route path="foundations/featured-icon" element={<FeaturedIconPage />} />
+        <Route path="components/featured-icon" element={<FeaturedIconPage />} />
         <Route path="components/avatar" element={<AvatarPage />} />
         <Route path="components/badge" element={<BadgePage />} />
         <Route path="components/badge-group" element={<BadgeGroupPage />} />

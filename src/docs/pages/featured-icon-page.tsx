@@ -52,7 +52,7 @@ export function FeaturedIconPage() {
 
   return (
     <div>
-      <Breadcrumb items={[{ label: 'Foundations' }, { label: 'Featured icon' }]} />
+      <Breadcrumb items={[{ label: 'Components' }, { label: 'Featured icon' }]} />
 
       <h1 style={{ fontSize: 28, fontWeight: 500, letterSpacing: '-0.02em', margin: '0 0 8px', color: 'var(--text-primary)' }}>
         Featured icon

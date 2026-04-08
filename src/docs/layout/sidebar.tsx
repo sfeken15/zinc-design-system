@@ -9,9 +9,7 @@ const NAV = [
   {
     group: 'Foundations',
     items: [
-      { label: 'Installation', path: '/installation' },
       { label: 'Colors', path: '/colors' },
-      { label: 'Featured icon', path: '/foundations/featured-icon' },
       { label: 'Icons', path: '/icons' },
       { label: 'Logos', path: '/logos' },
       { label: 'Spacing', path: '/spacing' },
@@ -29,6 +27,7 @@ const NAV = [
       { label: 'Card', path: '/components/card' },
       { label: 'Checkbox', path: '/components/checkbox' },
       { label: 'Dropdown', path: '/components/dropdown' },
+      { label: 'Featured icon', path: '/components/featured-icon' },
       { label: 'File upload', path: '/components/file-upload' },
       { label: 'Form', path: '/components/form' },
       { label: 'Input', path: '/components/input' },
@@ -88,10 +87,13 @@ export function Sidebar() {
         style={{ flex: 1, overflowY: 'auto', scrollbarWidth: 'none', padding: '12px 0' }}
         className="[&::-webkit-scrollbar]:hidden"
       >
-        {/* Standalone Introduction link — above the accordion groups */}
+        {/* Standalone links — above the accordion groups */}
         <div style={{ padding: '0 8px 4px' }}>
           <NavLink to="/introduction" className={({ isActive }) => navItemClass(isActive)}>
             Introduction
+          </NavLink>
+          <NavLink to="/installation" className={({ isActive }) => navItemClass(isActive)}>
+            Installation
           </NavLink>
         </div>
 

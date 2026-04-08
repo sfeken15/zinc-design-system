@@ -1,46 +1,158 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  LayersThree01,
+  Palette,
+  Type01,
+  Code01,
+  GitBranch01,
+  Moon01,
+  Copy01,
+  Check,
+} from '@untitledui/icons';
 import { useDocsContext } from '@/docs/layout/docs-context';
 import { Breadcrumb } from '@/docs/layout/breadcrumb';
+import { Button } from '@/components/Button';
 
 const SECTIONS = [
   { id: 'overview', label: 'Overview' },
-  { id: 'stack', label: 'Tech stack' },
+  { id: 'whats-included', label: "What's included" },
+  { id: 'tech-stack', label: 'Tech stack' },
   { id: 'getting-started', label: 'Getting started' },
-  { id: 'components', label: 'Components' },
+  { id: 'quick-links', label: 'Quick links' },
 ];
 
-const COMPONENTS = [
-  { label: 'Avatar', path: '/components/avatar', description: 'Profile images with status, verified badge, and initials fallback.' },
-  { label: 'Badge', path: '/components/badge', description: 'Semantic status labels in six color variants.' },
-  { label: 'Button', path: '/components/button', description: 'Four variants, four sizes, loading and icon states.' },
-  { label: 'Checkbox', path: '/components/checkbox', description: 'Boolean selection with indeterminate support.' },
-  { label: 'Input', path: '/components/input', description: 'Text fields with label, hint, icon, and error states.' },
-  { label: 'Select', path: '/components/select', description: 'Dropdown and combobox selection with search.' },
-  { label: 'Tag', path: '/components/tag', description: 'Selectable pill tags for filters and categories.' },
-  { label: 'Tooltip', path: '/components/tooltip', description: 'Contextual hints anchored to any element.' },
+const INCLUDED_CARDS = [
+  {
+    icon: LayersThree01,
+    title: '11 components',
+    description: 'Button, Input, Tag, Slider, Badge, Card, StepDots, and more.',
+  },
+  {
+    icon: Palette,
+    title: 'Brand tokens',
+    description: 'Full color system — Graffiti, Blurple, and Zinc — light and dark mode.',
+  },
+  {
+    icon: Type01,
+    title: 'General Sans',
+    description: "Explore Joplin's primary font applied across all components.",
+  },
+  {
+    icon: Code01,
+    title: 'React + TypeScript',
+    description: 'Built on Vite, Tailwind CSS v4, and React Aria.',
+  },
+  {
+    icon: GitBranch01,
+    title: 'Open source',
+    description: 'MIT licensed. Fork it, extend it, use it in any EJ product.',
+  },
+  {
+    icon: Moon01,
+    title: 'Dark mode default',
+    description: 'Tools default to dark. Light mode available with a class toggle.',
+  },
 ];
 
-const STACK = [
-  { label: 'React 19 + TypeScript', description: 'Fully typed components with strict mode enabled.' },
-  { label: 'Tailwind CSS v4', description: 'Utility-first styling with CSS custom property tokens.' },
-  { label: 'React Aria Components', description: 'Accessible primitives for keyboard and screen reader support.' },
-  { label: '1,179 icons', description: 'Untitled UI line-style icon library, tree-shakeable.' },
+const STACK_CARDS = [
+  {
+    title: 'React 19 + TypeScript',
+    description: 'Fully typed components with strict mode enabled.',
+  },
+  {
+    title: 'Tailwind CSS v4',
+    description: 'Utility-first styling with CSS custom property tokens.',
+  },
+  {
+    title: 'React Aria Components',
+    description: 'Accessible primitives for keyboard and screen reader support.',
+  },
+  {
+    title: '1,179 icons',
+    description: 'Untitled UI line-style icon library, tree-shakeable.',
+  },
 ];
+
+const CODE_SAMPLE = `import { Button } from '@/components/Button';
+import { Input } from '@/components/Input';
+import { Badge } from '@/components/Badge';
+import { Tag } from '@/components/Tag';
+
+export function Example() {
+  return (
+    <div className="flex items-center gap-3">
+      <Badge label="New" variant="brand" />
+      <Input placeholder="Search Joplin..." />
+      <Button variant="primary">Explore</Button>
+    </div>
+  );
+}`;
+
+const QUICK_LINKS = [
+  { label: 'Browse all components', href: '/components/button', external: false },
+  { label: 'Colors & brand tokens', href: '/colors', external: false },
+  { label: 'Typography', href: '/typography', external: false },
+  { label: 'Logos', href: '/logos', external: false },
+  {
+    label: 'GitHub repository\u00a0↗',
+    href: 'https://github.com/sfeken15/zinc-design-system',
+    external: true,
+  },
+];
+
+const sectionLabelStyle: React.CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  letterSpacing: '0.08em',
+  textTransform: 'uppercase',
+  color: 'var(--text-tertiary)',
+  margin: '0 0 16px',
+};
+
+const cardStyle: React.CSSProperties = {
+  padding: 20,
+  borderRadius: 12,
+  border: '1px solid var(--border-default)',
+  background: 'var(--bg-surface)',
+};
+
+const cardTitleStyle: React.CSSProperties = {
+  fontSize: 15,
+  fontWeight: 600,
+  color: 'var(--text-primary)',
+  margin: '0 0 4px',
+};
+
+const cardDescStyle: React.CSSProperties = {
+  fontSize: 13,
+  color: 'var(--text-secondary)',
+  margin: 0,
+  lineHeight: 1.5,
+};
 
 export function IntroductionPage() {
   const { setSections } = useDocsContext();
   const navigate = useNavigate();
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setSections(SECTIONS);
     return () => setSections([]);
   }, [setSections]);
 
+  function handleCopy() {
+    navigator.clipboard.writeText(CODE_SAMPLE).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  }
+
   return (
     <div>
       <Breadcrumb items={[{ label: 'Introduction' }]} />
 
+      {/* ── Hero ── */}
       <h1
         style={{
           fontSize: 28,
@@ -52,11 +164,35 @@ export function IntroductionPage() {
       >
         Zinc Design System
       </h1>
-      <p style={{ fontSize: 15, color: 'var(--text-secondary)', margin: '0 0 32px' }}>
-        A React component library built for Explore Joplin — consistent, accessible, and ready to ship.
+      <p
+        style={{
+          fontSize: 16,
+          color: 'var(--text-secondary)',
+          margin: '0 0 24px',
+          maxWidth: 560,
+          lineHeight: 1.6,
+        }}
+      >
+        A React component library built for Explore Joplin — consistent, accessible, and ready to
+        ship.
       </p>
 
-      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 40px' }} />
+      <div style={{ display: 'flex', gap: 12, marginBottom: 40 }}>
+        <Button variant="primary" size="md" onClick={() => navigate('/components/button')}>
+          Browse components
+        </Button>
+        <Button
+          variant="secondary"
+          size="md"
+          onClick={() =>
+            window.open('https://github.com/sfeken15/zinc-design-system', '_blank')
+          }
+        >
+          View on GitHub ↗
+        </Button>
+      </div>
+
+      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 48px' }} />
 
       {/* ── Overview ── */}
       <div id="overview" style={{ marginBottom: 48 }}>
@@ -71,17 +207,10 @@ export function IntroductionPage() {
         >
           Overview
         </h2>
-        <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.75, margin: '0 0 12px' }}>
-          Zinc is the design system that powers Explore Joplin's products. It provides a curated set of
-          React components, design tokens, and guidelines that keep every surface — marketing pages,
-          dashboards, forms — visually cohesive and behaving predictably.
-        </p>
         <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.75, margin: 0 }}>
-          Every component is built on React Aria Components, so keyboard navigation, focus management,
-          and screen reader announcements are handled out of the box. Styling is done with Tailwind CSS
-          v4 and a layered token system: primitive values (raw zinc, graffiti, blurple scales) feed into
-          semantic aliases (text-primary, bg-surface, border-default) that automatically adapt between
-          dark and light modes.
+          Zinc is the design system that powers Explore Joplin's products. It provides a curated
+          set of React components, design tokens, and guidelines that keep every surface visually
+          cohesive.
         </p>
 
         <div
@@ -92,156 +221,235 @@ export function IntroductionPage() {
             marginTop: 24,
           }}
         >
-          {[
-            { label: 'Primary', value: 'Graffiti Teal', sub: '#15B79E' },
-            { label: 'Secondary', value: 'Blurple', sub: '#683DEE' },
-            { label: 'Neutral', value: 'Zinc', sub: '#71717A' },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              style={{
-                padding: '20px 24px',
-                borderRadius: 12,
-                border: '1px solid var(--border-default)',
-                background: 'var(--bg-surface)',
-              }}
-            >
-              <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: '0 0 6px' }}>
-                {stat.label}
-              </p>
-              <p style={{ fontSize: 18, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 2px' }}>
-                {stat.value}
-              </p>
-              <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: 0, fontFamily: 'var(--font-mono)' }}>
-                {stat.sub}
-              </p>
+          <div
+            style={{
+              ...cardStyle,
+              background: 'rgba(21, 183, 158, 0.08)',
+              borderLeft: '3px solid #15B79E',
+            }}
+          >
+            <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: '0 0 6px' }}>
+              Primary
+            </p>
+            <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 2px' }}>
+              Graffiti Teal
+            </p>
+            <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: 0, fontFamily: 'var(--font-mono)' }}>
+              #15B79E
+            </p>
+          </div>
+
+          <div
+            style={{
+              ...cardStyle,
+              background: 'rgba(104, 61, 238, 0.08)',
+              borderLeft: '3px solid #683DEE',
+            }}
+          >
+            <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: '0 0 6px' }}>
+              Secondary
+            </p>
+            <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 2px' }}>
+              Blurple
+            </p>
+            <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: 0, fontFamily: 'var(--font-mono)' }}>
+              #683DEE
+            </p>
+          </div>
+
+          <div
+            style={{
+              ...cardStyle,
+              borderLeft: '3px solid var(--border-strong)',
+            }}
+          >
+            <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: '0 0 6px' }}>
+              Neutral
+            </p>
+            <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 2px' }}>
+              Zinc
+            </p>
+            <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: 0, fontFamily: 'var(--font-mono)' }}>
+              #71717A
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 48px' }} />
+
+      {/* ── What's included ── */}
+      <div id="whats-included" style={{ marginBottom: 48 }}>
+        <p style={sectionLabelStyle}>What's included</p>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 16,
+          }}
+        >
+          {INCLUDED_CARDS.map((card) => {
+            const Icon = card.icon;
+            return (
+              <div key={card.title} style={cardStyle}>
+                <Icon
+                  className="size-5"
+                  style={{ color: 'var(--text-brand)', marginBottom: 12 }}
+                  aria-hidden
+                />
+                <p style={cardTitleStyle}>{card.title}</p>
+                <p style={cardDescStyle}>{card.description}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 48px' }} />
+
+      {/* ── Tech stack ── */}
+      <div id="tech-stack" style={{ marginBottom: 48 }}>
+        <p style={sectionLabelStyle}>Tech stack</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+          {STACK_CARDS.map((card) => (
+            <div key={card.title} style={cardStyle}>
+              <p style={cardTitleStyle}>{card.title}</p>
+              <p style={cardDescStyle}>{card.description}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ── Tech stack ── */}
-      <div id="stack" style={{ marginBottom: 48 }}>
-        <h2
-          style={{
-            fontSize: 20,
-            fontWeight: 500,
-            color: 'var(--text-primary)',
-            margin: '0 0 16px',
-            letterSpacing: '-0.01em',
-          }}
-        >
-          Tech stack
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
-          {STACK.map((item) => (
-            <div
-              key={item.label}
-              style={{
-                padding: '16px 20px',
-                borderRadius: 10,
-                border: '1px solid var(--border-default)',
-                background: 'var(--bg-surface)',
-              }}
-            >
-              <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 4px' }}>
-                {item.label}
-              </p>
-              <p style={{ fontSize: 13, color: 'var(--text-tertiary)', margin: 0, lineHeight: 1.6 }}>
-                {item.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 48px' }} />
 
       {/* ── Getting started ── */}
       <div id="getting-started" style={{ marginBottom: 48 }}>
-        <h2
-          style={{
-            fontSize: 20,
-            fontWeight: 500,
-            color: 'var(--text-primary)',
-            margin: '0 0 12px',
-            letterSpacing: '-0.01em',
-          }}
-        >
-          Getting started
-        </h2>
-        <p style={{ fontSize: 14, color: 'var(--text-secondary)', margin: '0 0 16px' }}>
-          Components are imported directly from their module paths. Use named imports for best tree-shaking:
+        <p style={sectionLabelStyle}>Getting started</p>
+        <p style={{ fontSize: 14, color: 'var(--text-secondary)', margin: '0 0 16px', lineHeight: 1.6 }}>
+          Components are imported directly from their module paths. Use named imports for best
+          tree-shaking:
         </p>
-        <pre
-          style={{
-            margin: 0,
-            padding: 24,
-            background: 'var(--bg-subtle)',
-            border: '1px solid var(--border-default)',
-            borderRadius: 8,
-            fontSize: 13,
-            fontFamily: 'var(--font-mono)',
-            color: 'var(--text-primary)',
-            lineHeight: 1.6,
-            overflowX: 'auto',
-          }}
-        >
-          <code>{`import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
-import { Avatar } from '@/components/Avatar';
-import { Home01 } from '@untitledui/icons';
-
-<Button variant="primary" size="md">Save changes</Button>
-<Input label="Email" placeholder="you@example.com" />
-<Avatar initials="JD" size="md" status="online" />
-<Home01 className="size-5 text-primary" />`}</code>
-        </pre>
+        <div style={{ position: 'relative' }}>
+          <pre
+            style={{
+              margin: 0,
+              padding: 20,
+              background: 'var(--bg-subtle)',
+              border: '1px solid var(--border-default)',
+              borderRadius: 8,
+              fontSize: 13,
+              fontFamily: 'var(--font-mono)',
+              color: 'var(--text-primary)',
+              lineHeight: 1.6,
+              overflowX: 'auto',
+            }}
+          >
+            <code>{CODE_SAMPLE}</code>
+          </pre>
+          <button
+            onClick={handleCopy}
+            style={{
+              position: 'absolute',
+              top: 12,
+              right: 12,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              padding: '4px 10px',
+              fontSize: 12,
+              fontWeight: 500,
+              fontFamily: 'inherit',
+              borderRadius: 6,
+              border: '1px solid var(--border-default)',
+              background: 'var(--bg-surface)',
+              color: 'var(--text-secondary)',
+              cursor: 'pointer',
+              transition: 'background 100ms linear, color 100ms linear',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = 'var(--bg-hover)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = 'var(--bg-surface)';
+            }}
+          >
+            {copied ? (
+              <>
+                <Check className="size-3" aria-hidden />
+                Copied!
+              </>
+            ) : (
+              <>
+                <Copy01 className="size-3" aria-hidden />
+                Copy
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
-      {/* ── Components ── */}
-      <div id="components">
-        <h2
-          style={{
-            fontSize: 20,
-            fontWeight: 500,
-            color: 'var(--text-primary)',
-            margin: '0 0 16px',
-            letterSpacing: '-0.01em',
-          }}
-        >
-          Components
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
-          {COMPONENTS.map((c) => (
-            <button
-              key={c.path}
-              onClick={() => navigate(c.path)}
-              style={{
-                padding: '16px 20px',
-                borderRadius: 10,
-                border: '1px solid var(--border-default)',
-                background: 'var(--bg-surface)',
-                textAlign: 'left',
-                cursor: 'pointer',
-                transition: 'border-color 100ms linear, background 100ms linear',
-                fontFamily: 'inherit',
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-brand)';
-                (e.currentTarget as HTMLButtonElement).style.background = 'var(--bg-subtle)';
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-default)';
-                (e.currentTarget as HTMLButtonElement).style.background = 'var(--bg-surface)';
-              }}
-            >
-              <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 4px' }}>
-                {c.label}
-              </p>
-              <p style={{ fontSize: 13, color: 'var(--text-tertiary)', margin: 0, lineHeight: 1.6 }}>
-                {c.description}
-              </p>
-            </button>
-          ))}
+      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 48px' }} />
+
+      {/* ── Quick links ── */}
+      <div id="quick-links">
+        <p style={sectionLabelStyle}>Quick links</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {QUICK_LINKS.map((link) =>
+            link.external ? (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontSize: 15,
+                  fontWeight: 500,
+                  color: 'var(--text-brand)',
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.textDecoration = 'underline';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.textDecoration = 'none';
+                }}
+              >
+                <span style={{ color: 'var(--text-tertiary)' }}>→</span>
+                {link.label}
+              </a>
+            ) : (
+              <button
+                key={link.href}
+                onClick={() => navigate(link.href)}
+                style={{
+                  fontSize: 15,
+                  fontWeight: 500,
+                  color: 'var(--text-brand)',
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  fontFamily: 'inherit',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.textDecoration = 'underline';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.textDecoration = 'none';
+                }}
+              >
+                <span style={{ color: 'var(--text-tertiary)' }}>→</span>
+                {link.label}
+              </button>
+            )
+          )}
         </div>
       </div>
     </div>

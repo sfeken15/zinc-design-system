@@ -170,7 +170,7 @@ export function Sidebar() {
                   justifyContent: 'space-between',
                   width: '100%',
                   padding: '4px 16px 8px',
-                  fontSize: 12,
+                  fontSize: 'var(--text-xs)',
                   fontWeight: 600,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
@@ -178,7 +178,7 @@ export function Sidebar() {
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
-                  fontFamily: 'inherit',
+                  fontFamily: 'var(--font-body)',
                 }}
               >
                 {section.group}

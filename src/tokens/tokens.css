@@ -166,22 +166,22 @@
        COMPONENT TOKENS — LIGHT MODE
        ------------------------------------------------------------------------- */
 
-    /* Buttons */
-    --btn-primary-bg:          var(--graffiti-500);
-    --btn-primary-bg-hover:    var(--graffiti-700);
-    --btn-primary-text:        var(--zinc-white);
-    --btn-secondary-bg:        var(--zinc-white);
-    --btn-secondary-bg-hover:  var(--zinc-50);
-    --btn-secondary-text:      var(--zinc-950);
-    --btn-secondary-border:    var(--zinc-200);
+    /* Buttons — LIGHT MODE */
+    --btn-primary-bg:          #000000;
+    --btn-primary-bg-hover:    #1a1a1a;
+    --btn-primary-text:        #ffffff;
+    --btn-secondary-bg:        #f4f4f5;
+    --btn-secondary-bg-hover:  #e4e4e7;
+    --btn-secondary-text:      #09090b;
+    --btn-secondary-border:    transparent;
     --btn-ghost-bg:            transparent;
-    --btn-ghost-bg-hover:      var(--zinc-100);
-    --btn-ghost-text:          var(--zinc-700);
-    --btn-ghost-border:        transparent;
-    --btn-accent-bg:           var(--blurple-600);
-    --btn-accent-bg-hover:     var(--blurple-400);
-    --btn-accent-text:         var(--zinc-white);
-    --btn-radius:              9999px;
+    --btn-ghost-bg-hover:      rgba(0, 0, 0, 0.04);
+    --btn-ghost-text:          #09090b;
+    --btn-ghost-border:        #d4d4d8;
+    --btn-accent-bg:           #0e9384;
+    --btn-accent-bg-hover:     #107569;
+    --btn-accent-text:         #ffffff;
+    --btn-radius:              0.75rem;
 
     /* Inputs */
     --input-bg:                var(--zinc-white);
@@ -311,20 +311,21 @@
     --color-info-subtle:    rgba(30, 144, 255, 0.15);
     --color-info-text:      var(--azure-200);
 
-    --btn-primary-bg:          var(--graffiti-500);
-    --btn-primary-bg-hover:    var(--graffiti-300);
-    --btn-primary-text:        var(--zinc-950);
-    --btn-secondary-bg:        var(--zinc-white);
-    --btn-secondary-bg-hover:  var(--zinc-100);
-    --btn-secondary-text:      var(--zinc-950);
+    /* Buttons — DARK MODE */
+    --btn-primary-bg:          #ffffff;
+    --btn-primary-bg-hover:    #f4f4f5;
+    --btn-primary-text:        #09090b;
+    --btn-secondary-bg:        #27272a;
+    --btn-secondary-bg-hover:  #3f3f46;
+    --btn-secondary-text:      #ffffff;
     --btn-secondary-border:    transparent;
     --btn-ghost-bg:            transparent;
-    --btn-ghost-bg-hover:      rgba(255,255,255,0.06);
-    --btn-ghost-text:          var(--zinc-400);
-    --btn-ghost-border:        var(--zinc-800);
-    --btn-accent-bg:           var(--blurple-400);
-    --btn-accent-bg-hover:     var(--blurple-600);
-    --btn-accent-text:         var(--zinc-white);
+    --btn-ghost-bg-hover:      rgba(255, 255, 255, 0.06);
+    --btn-ghost-text:          #ffffff;
+    --btn-ghost-border:        #3f3f46;
+    --btn-accent-bg:           #15b79e;
+    --btn-accent-bg-hover:     #0e9384;
+    --btn-accent-text:         #09090b;
 
     --input-bg:                rgba(255,255,255,0.04);
     --input-bg-focus:          rgba(255,255,255,0.06);
@@ -406,13 +407,21 @@
     --icon-subtle:         var(--zinc-500);
     --icon-brand:          var(--graffiti-500);
 
-    --btn-primary-bg:          var(--graffiti-500);
-    --btn-primary-bg-hover:    var(--graffiti-700);
-    --btn-primary-text:        var(--zinc-white);
-    --btn-ghost-bg-hover:      var(--zinc-100);
-    --btn-ghost-text:          var(--zinc-700);
-    --btn-ghost-border:        transparent;
-    --btn-accent-bg:           var(--blurple-600);
+    /* Buttons — LIGHT MODE (explicit override) */
+    --btn-primary-bg:          #000000;
+    --btn-primary-bg-hover:    #1a1a1a;
+    --btn-primary-text:        #ffffff;
+    --btn-secondary-bg:        #f4f4f5;
+    --btn-secondary-bg-hover:  #e4e4e7;
+    --btn-secondary-text:      #09090b;
+    --btn-secondary-border:    transparent;
+    --btn-ghost-bg:            transparent;
+    --btn-ghost-bg-hover:      rgba(0, 0, 0, 0.04);
+    --btn-ghost-text:          #09090b;
+    --btn-ghost-border:        #d4d4d8;
+    --btn-accent-bg:           #0e9384;
+    --btn-accent-bg-hover:     #107569;
+    --btn-accent-text:         #ffffff;
 
     --input-bg:                var(--zinc-white);
     --input-border:            var(--zinc-200);

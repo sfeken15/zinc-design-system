@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ChevronUp } from '@untitledui/icons';
-import { LogoHologram } from '@/components/logos/Logo';
+import { ChevronUp, Moon01, Sun } from '@untitledui/icons';
+import { LogoHologram, LogoBlack } from '@/components/logos/Logo';
 import { navItemClass } from '@/components/NavItem';
 import { useTheme } from '@/providers/theme-provider';
 
@@ -75,11 +75,44 @@ export function Sidebar() {
       <div
         style={{
           padding: '20px',
-          borderBottom: '1px solid var(--border-default)',
           flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
-        <LogoHologram height={20} />
+        {theme === 'dark' ? <LogoHologram height={20} /> : <LogoBlack height={20} />}
+        <button
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 32,
+            height: 32,
+            borderRadius: 8,
+            border: 'none',
+            background: 'none',
+            cursor: 'pointer',
+            color: 'var(--icon-subtle)',
+            flexShrink: 0,
+            transition: 'background 150ms ease, color 150ms ease',
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = 'var(--nav-item-hover)';
+            (e.currentTarget as HTMLButtonElement).style.color = 'var(--icon-default)';
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = 'none';
+            (e.currentTarget as HTMLButtonElement).style.color = 'var(--icon-subtle)';
+          }}
+        >
+          {theme === 'dark'
+            ? <Sun style={{ width: 18, height: 18 }} />
+            : <Moon01 style={{ width: 18, height: 18 }} />
+          }
+        </button>
       </div>
 
       {/* Scrollable nav — scrollbar hidden */}
@@ -162,32 +195,6 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Fixed footer */}
-      <div
-        style={{
-          padding: '14px 16px',
-          borderTop: '1px solid var(--border-default)',
-          flexShrink: 0,
-        }}
-      >
-        <button
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            fontSize: 13,
-            color: 'var(--text-tertiary)',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: 0,
-            fontFamily: 'inherit',
-          }}
-        >
-          {theme === 'dark' ? '☀ Light mode' : '☾ Dark mode'}
-        </button>
-      </div>
     </aside>
   );
 }

@@ -172,8 +172,6 @@ export function Sidebar() {
                   padding: '4px 16px 8px',
                   fontSize: 'var(--text-xs)',
                   fontWeight: 600,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
                   color: 'var(--text-primary)',
                   background: 'none',
                   border: 'none',

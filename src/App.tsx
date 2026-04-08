@@ -24,6 +24,11 @@ import { RadioButtonPage } from '@/docs/pages/radio-button-page';
 import { SelectPage } from '@/docs/pages/select-page';
 import { TooltipPage } from '@/docs/pages/tooltip-page';
 import { IconsPage } from '@/docs/pages/icons-page';
+import { FeaturedIconPage } from '@/docs/pages/featured-icon-page';
+import { TogglePage } from '@/docs/pages/toggle-page';
+import { ProgressPage } from '@/docs/pages/progress-page';
+import { FileUploadPage } from '@/docs/pages/file-upload-page';
+import { FormPage } from '@/docs/pages/form-page';
 
 export default function App() {
   return (
@@ -37,6 +42,7 @@ export default function App() {
         <Route path="logos" element={<LogosPage />} />
         <Route path="spacing" element={<SpacingPage />} />
         <Route path="icons" element={<IconsPage />} />
+        <Route path="foundations/featured-icon" element={<FeaturedIconPage />} />
         <Route path="components/avatar" element={<AvatarPage />} />
         <Route path="components/badge" element={<BadgePage />} />
         <Route path="components/badge-group" element={<BadgeGroupPage />} />
@@ -53,6 +59,10 @@ export default function App() {
         <Route path="components/stepdots" element={<StepDotsPage />} />
         <Route path="components/tag" element={<TagPage />} />
         <Route path="components/textarea" element={<TextareaPage />} />
+        <Route path="components/file-upload" element={<FileUploadPage />} />
+        <Route path="components/form" element={<FormPage />} />
+        <Route path="components/progress" element={<ProgressPage />} />
+        <Route path="components/toggle" element={<TogglePage />} />
         <Route path="components/tooltip" element={<TooltipPage />} />
       </Route>
     </Routes>

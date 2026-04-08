@@ -68,14 +68,9 @@ export function ProgressPage() {
     <div>
       <Breadcrumb items={[{ label: 'Components' }, { label: 'Progress indicators' }]} />
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-        <h1 style={{ fontSize: 28, fontWeight: 500, letterSpacing: '-0.02em', margin: 0, color: 'var(--text-primary)' }}>
-          Progress indicator components
-        </h1>
-        <span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 20, border: '1px solid var(--border-default)', color: 'var(--text-tertiary)', letterSpacing: '0.04em' }}>
-          FREE
-        </span>
-      </div>
+      <h1 style={{ fontSize: 28, fontWeight: 500, letterSpacing: '-0.02em', margin: '0 0 8px', color: 'var(--text-primary)' }}>
+        Progress indicator components
+      </h1>
       <p style={{ fontSize: 15, color: 'var(--text-secondary)', margin: '0 0 32px', lineHeight: 1.6, maxWidth: 600 }}>
         Free and open-source React progress indicator components. Use progress bars, circles, and simple indicators to show loading states and completion percentage.
       </p>

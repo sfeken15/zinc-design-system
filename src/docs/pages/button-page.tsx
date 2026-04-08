@@ -18,6 +18,7 @@ import {
   DotsHorizontal,
   Copy01,
   Trash01,
+  Trash02,
 } from '@untitledui/icons';
 
 const SECTIONS = [
@@ -28,6 +29,7 @@ const SECTIONS = [
   { id: 'secondary', label: 'Secondary buttons' },
   { id: 'ghost', label: 'Ghost buttons' },
   { id: 'accent', label: 'Accent buttons' },
+  { id: 'destructive', label: 'Destructive buttons' },
   { id: 'sizes', label: 'Sizes' },
   { id: 'icon-leading', label: 'Icon leading' },
   { id: 'icon-trailing', label: 'Icon trailing' },
@@ -43,7 +45,7 @@ const SECTIONS = [
 ];
 
 const PROPS = [
-  { name: 'variant', type: '"primary" | "secondary" | "ghost" | "accent"', default: '"primary"', description: 'Visual style of the button' },
+  { name: 'variant', type: '"primary" | "secondary" | "ghost" | "accent" | "destructive" | "destructive-outline" | "destructive-ghost" | "destructive-link"', default: '"primary"', description: 'Visual style of the button' },
   { name: 'size', type: '"sm" | "md" | "lg" | "xl"', default: '"md"', description: 'Size of the button' },
   { name: 'fullWidth', type: 'boolean', default: 'false', description: 'Stretches button to fill its container' },
   { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables interaction' },
@@ -271,6 +273,57 @@ export function ButtonPage() {
         }
         code={`<Button variant="accent">Start exploring</Button>
 <Button variant="ghost">Browse all</Button>`}
+      />
+
+      {/* ------------------------------------------------------------------ */}
+      <SectionHeader
+        id="destructive"
+        title="Destructive buttons"
+        subtitle="Four destructive styles for irreversible actions — delete, remove, revoke. Match the weight to the surrounding UI: solid for primary destructive CTAs, outline or ghost for less prominent placements, link for inline text actions."
+      />
+      <Preview
+        title="Destructive buttons"
+        preview={
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+            <Button variant="destructive">
+              <Trash02 className="w-4 h-4" />
+              Delete
+            </Button>
+            <Button variant="destructive-outline">
+              <Trash02 className="w-4 h-4" />
+              Delete
+            </Button>
+            <Button variant="destructive-ghost">
+              <Trash02 className="w-4 h-4" />
+              Delete
+            </Button>
+            <Button variant="destructive-link">
+              Delete
+            </Button>
+          </div>
+        }
+        code={`import { Trash02 } from '@untitledui/icons';
+
+{/* Solid — primary destructive CTA */}
+<Button variant="destructive">
+  <Trash02 className="w-4 h-4" />
+  Delete
+</Button>
+
+{/* Outline — secondary destructive */}
+<Button variant="destructive-outline">
+  <Trash02 className="w-4 h-4" />
+  Delete
+</Button>
+
+{/* Ghost — tertiary destructive */}
+<Button variant="destructive-ghost">
+  <Trash02 className="w-4 h-4" />
+  Delete
+</Button>
+
+{/* Link — inline destructive */}
+<Button variant="destructive-link">Delete</Button>`}
       />
 
       {/* ------------------------------------------------------------------ */}

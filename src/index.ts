@@ -1,9 +1,12 @@
 // Logos
 export { Logo, LogoHologram, LogoWhite, LogoBlack } from "@/components/logos/Logo";
 
+// Custom Components
+export { ZincAvatar } from "@/components/ZincAvatar";
+export { ZincCardMedia } from "@/components/cards/ZincCardMedia";
+
 // Components
 export { Avatar } from "@/components/Avatar";
-export { ZincAvatar } from "@/components/ZincAvatar";
 export { NavItem, navItemClass } from "@/components/NavItem";
 export { Badge } from "@/components/Badge";
 export { BadgeGroup } from "@/components/BadgeGroup";

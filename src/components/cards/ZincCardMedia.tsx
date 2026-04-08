@@ -1,12 +1,13 @@
 import { cx } from '@/utils/cx';
-import { Badge } from '@/components/base/badges/badges';
-import type { BadgeColors } from '@/components/base/badges/badge-types';
+import { Badge } from '@/components/Badge';
+
+type BadgeVariant = 'brand' | 'accent' | 'neutral' | 'success' | 'warning' | 'error';
 
 interface ZincCardMediaProps {
   image?: string;
   imageAlt?: string;
   tag?: string;
-  tagColor?: BadgeColors;
+  tagColor?: BadgeVariant;
   title: string;
   excerpt?: string;
   size?: 'sm' | 'md' | 'lg';
@@ -179,7 +180,7 @@ export function ZincCardMedia({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          padding: `8px ${c.pad} ${c.pad}`,
+          padding: `8px ${c.pad}`,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -189,7 +190,7 @@ export function ZincCardMedia({
         {/* Tag left — Badge component */}
         <div>
           {tag ? (
-            <Badge type="color" size="sm" color={tagColor}>{tag}</Badge>
+            <Badge label={tag} variant={tagColor} />
           ) : (
             <div style={{ width: 4 }} />
           )}

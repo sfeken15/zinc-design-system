@@ -98,16 +98,16 @@ export function Configurator({ controls, defaultValues, codeTemplate, children }
                     padding: '7px 10px',
                     fontSize: 13,
                     fontFamily: 'var(--font-body)',
-                    background: 'var(--bg-page)',
-                    color: 'var(--text-primary)',
-                    border: '1px solid var(--border-default)',
-                    borderRadius: 6,
+                    background: 'var(--input-bg)',
+                    color: 'var(--input-text)',
+                    border: '1px solid var(--input-border)',
+                    borderRadius: 'var(--input-radius)',
                     outline: 'none',
                     boxSizing: 'border-box',
                     transition: 'border-color 0.15s',
                   }}
-                  onFocus={e => (e.target.style.borderColor = 'var(--graffiti-500)')}
-                  onBlur={e => (e.target.style.borderColor = 'var(--border-default)')}
+                  onFocus={e => (e.target.style.borderColor = 'var(--input-border-focus)')}
+                  onBlur={e => (e.target.style.borderColor = 'var(--input-border)')}
                 />
               )}
 
@@ -182,7 +182,7 @@ export function Configurator({ controls, defaultValues, codeTemplate, children }
                           ? 'var(--graffiti-500)'
                           : 'var(--bg-page)',
                         color: values[control.key] === opt.value
-                          ? '#fff'
+                          ? 'var(--zinc-950)'
                           : 'var(--text-tertiary)',
                         transition: 'all 0.15s',
                       }}
@@ -203,10 +203,10 @@ export function Configurator({ controls, defaultValues, codeTemplate, children }
                     padding: '7px 10px',
                     fontSize: 13,
                     fontFamily: 'var(--font-body)',
-                    background: 'var(--bg-page)',
-                    color: 'var(--text-primary)',
-                    border: '1px solid var(--border-default)',
-                    borderRadius: 6,
+                    background: 'var(--input-bg)',
+                    color: 'var(--input-text)',
+                    border: '1px solid var(--input-border)',
+                    borderRadius: 'var(--input-radius)',
                     outline: 'none',
                     cursor: 'pointer',
                     appearance: 'none',
@@ -244,7 +244,7 @@ export function Configurator({ controls, defaultValues, codeTemplate, children }
             fontWeight: 600,
             fontFamily: 'var(--font-body)',
             background: copied ? 'var(--graffiti-500)' : 'var(--bg-surface)',
-            color: copied ? '#fff' : 'var(--text-secondary)',
+            color: copied ? 'var(--zinc-950)' : 'var(--text-secondary)',
             border: '1px solid var(--border-default)',
             borderRadius: 6,
             cursor: 'pointer',

@@ -5,37 +5,36 @@ import { Preview } from '@/docs/components/preview';
 import { PropsTable } from '@/docs/components/props-table';
 import { SectionHeader } from '@/docs/components/section-header';
 import { Configurator } from '@/docs/components/Configurator';
-import { Avatar } from '@/components/Avatar';
+import { ZincAvatar } from '@/components/ZincAvatar';
 
 const SECTIONS = [
   { id: 'playground', label: 'Playground' },
   { id: 'sizes', label: 'Sizes' },
-  { id: 'initials', label: 'With initials' },
-  { id: 'status', label: 'With status' },
+  { id: 'gradient-only', label: 'Gradient (no initials)' },
+  { id: 'with-initials', label: 'With initials' },
+  { id: 'with-photo', label: 'With photo' },
+  { id: 'label-group', label: 'Label group' },
+  { id: 'group', label: 'Avatar group' },
   { id: 'props', label: 'Props' },
 ];
 
 const PROPS = [
-  { name: 'size', type: '"xs" | "sm" | "md" | "lg" | "xl" | "2xl"', default: '"md"', description: 'Size of the avatar' },
-  { name: 'src', type: 'string', default: '—', description: 'Image URL' },
-  { name: 'alt', type: 'string', default: '—', description: 'Alt text for accessibility' },
-  { name: 'initials', type: 'string', default: '—', description: 'Fallback initials when no image' },
-  { name: 'status', type: '"online" | "offline"', default: '—', description: 'Status indicator dot' },
-  { name: 'verified', type: 'boolean', default: 'false', description: 'Shows a verified badge' },
-  { name: 'border', type: 'boolean', default: 'false', description: 'Adds an outer ring border' },
-  { name: 'rounded', type: 'boolean', default: 'true', description: 'Fully rounded (circle) shape' },
-  { name: 'count', type: 'number', default: '—', description: 'Numeric count badge overlay' },
+  { name: 'name', type: 'string', default: '"User"', description: 'Seeds the gradient — same name always generates the same avatar' },
+  { name: 'src', type: 'string', default: '—', description: 'If provided, renders a photo instead of the gradient' },
+  { name: 'showInitials', type: 'boolean', default: 'false', description: 'Overlays initials on the gradient' },
+  { name: 'size', type: '"xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"', default: '"md"', description: 'Size variant' },
+  { name: 'className', type: 'string', default: '""', description: 'Additional CSS classes' },
+  { name: 'alt', type: 'string', default: 'name', description: 'Alt text for photo avatars' },
 ];
 
 // ── Configurator setup ──────────────────────────────────────────────────────
 
 const AVATAR_CONTROLS = [
-  {
-    type: 'text' as const,
-    key: 'initials',
-    label: 'Initials',
-    placeholder: 'JD',
-  },
+  { type: 'text' as const, key: 'name', label: 'Name', placeholder: 'Jane Doe' },
+  { type: 'text' as const, key: 'subLabel', label: 'Sub-label', placeholder: 'Product Designer' },
+  { type: 'toggle' as const, key: 'showInitials', label: 'Show initials' },
+  { type: 'toggle' as const, key: 'showName', label: 'Show name' },
+  { type: 'toggle' as const, key: 'showSubLabel', label: 'Show sub-label' },
   {
     type: 'button-group' as const,
     key: 'size',
@@ -49,95 +48,65 @@ const AVATAR_CONTROLS = [
       { label: '2XL', value: '2xl' },
     ],
   },
-  {
-    type: 'select' as const,
-    key: 'status',
-    label: 'Status',
-    options: [
-      { label: 'None', value: 'none' },
-      { label: 'Online', value: 'online' },
-      { label: 'Offline', value: 'offline' },
-    ],
-  },
-  {
-    type: 'toggle' as const,
-    key: 'verified',
-    label: 'Verified',
-  },
-  {
-    type: 'toggle' as const,
-    key: 'border',
-    label: 'Border',
-  },
-  {
-    type: 'toggle' as const,
-    key: 'rounded',
-    label: 'Rounded',
-  },
-  {
-    type: 'toggle' as const,
-    key: 'showName',
-    label: 'Show name',
-  },
-  {
-    type: 'toggle' as const,
-    key: 'showSubLabel',
-    label: 'Show sub-label',
-  },
-  {
-    type: 'button-group' as const,
-    key: 'layout',
-    label: 'Layout',
-    options: [
-      { label: 'Horizontal', value: 'horizontal' },
-      { label: 'Vertical', value: 'vertical' },
-    ],
-  },
 ];
 
 const AVATAR_DEFAULTS = {
-  initials: 'JD',
-  size: 'md',
-  status: 'none',
-  verified: false,
-  border: false,
-  rounded: true,
+  name: 'Jane Doe',
+  subLabel: 'Product Designer',
+  showInitials: false,
   showName: true,
   showSubLabel: true,
-  name: 'Jane Doe',
-  subLabel: 'jane@example.com',
-  layout: 'horizontal',
+  size: 'md',
 };
 
 const avatarCodeTemplate = (v: Record<string, any>) => {
-  const avatarProps = [
-    `  initials="${v.initials}"`,
-    `  size="${v.size}"`,
-    v.status !== 'none' ? `  status="${v.status}"` : null,
-  ].filter(Boolean).join('\n');
+  const lines = [`<ZincAvatar`];
+  lines.push(`  name="${v.name}"`);
+  lines.push(`  size="${v.size}"`);
+  if (v.showInitials) lines.push(`  showInitials`);
+  lines.push(`/>`);
 
-  if (!v.showName) {
-    return `<Avatar\n${avatarProps}\n/>`;
+  if (v.showName) {
+    return [
+      `<div className="flex items-center gap-3">`,
+      `  ${lines.join('\n  ')}`,
+      `  <div>`,
+      `    <p className="text-sm font-medium">${v.name}</p>`,
+      v.showSubLabel
+        ? `    <p className="text-sm text-[var(--text-tertiary)]">${v.subLabel}</p>`
+        : '',
+      `  </div>`,
+      `</div>`,
+    ]
+      .filter(Boolean)
+      .join('\n');
   }
 
-  const isVertical = v.layout === 'vertical';
-  const gapClass = v.size === 'xl' || v.size === '2xl' ? 'gap-4' : 'gap-3';
-  const flexDir = isVertical ? 'flex-col items-center' : 'items-center';
-
-  return `<div className="flex ${flexDir} ${gapClass}">
-  <Avatar
-${avatarProps}
-  />
-  <div className="flex flex-col${isVertical ? ' items-center' : ''}">
-    <span className="text-sm font-medium text-primary">
-      ${v.name}
-    </span>${v.showSubLabel ? `
-    <span className="text-sm text-tertiary">
-      ${v.subLabel}
-    </span>` : ''}
-  </div>
-</div>`;
+  return lines.join('\n');
 };
+
+// ── Sample data ─────────────────────────────────────────────────────────────
+
+const SAMPLE_NAMES = [
+  'Jane Doe',
+  'Marcus Hill',
+  'Priya Nair',
+  'Tom Chen',
+  'Zoe Wright',
+  'Alex Kim',
+  'Sam Rivera',
+  'Nina Park',
+];
+
+const LABEL_GROUP_PEOPLE = [
+  { name: 'Jane Doe', sub: 'Product Designer' },
+  { name: 'Marcus Hill', sub: 'Engineering Lead' },
+  { name: 'Priya Nair', sub: 'Marketing Director' },
+];
+
+const GROUP_NAMES = ['Jane Doe', 'Marcus Hill', 'Priya Nair', 'Tom Chen', 'Zoe Wright'];
+
+const ALL_SIZES = ['xxs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
 
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -153,61 +122,58 @@ export function AvatarPage() {
     <div>
       <Breadcrumb items={[{ label: 'Components' }, { label: 'Avatar' }]} />
 
-      <h1 style={{ fontSize: 28, fontWeight: 500, letterSpacing: '-0.02em', margin: '0 0 8px', color: 'var(--text-primary)' }}>
+      <h1
+        style={{
+          fontSize: 28,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+          margin: '0 0 8px',
+          color: 'var(--text-primary)',
+        }}
+      >
         Avatar
       </h1>
       <p style={{ fontSize: 15, color: 'var(--text-secondary)', margin: '0 0 32px' }}>
-        User profile images with fallback initials, status indicators, and verified badges.
+        Deterministic hologram gradient avatars seeded from a user's name. No broken
+        image states — the gradient is always the fallback.
       </p>
+
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 40px' }} />
 
       {/* ── Playground ── */}
       <SectionHeader id="playground" title="Playground" />
-
       <Configurator
         controls={AVATAR_CONTROLS}
         defaultValues={AVATAR_DEFAULTS}
         codeTemplate={avatarCodeTemplate}
       >
         {(v) => (
-          <div style={{
-            display: 'flex',
-            flexDirection: v.layout === 'vertical' ? 'column' : 'row',
-            alignItems: 'center',
-            gap: v.size === 'xl' || v.size === '2xl' ? 16 : 12,
-          }}>
-            <Avatar
-              initials={v.initials || 'JD'}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <ZincAvatar
+              name={v.name || 'Jane Doe'}
               size={v.size}
-              status={v.status === 'none' ? undefined : v.status}
-              verified={v.verified}
-              border={v.border}
-              rounded={v.rounded}
+              showInitials={v.showInitials}
             />
             {v.showName && (
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: v.layout === 'vertical' ? 'center' : undefined,
-                gap: 1,
-              }}>
-                <span style={{
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: 'var(--text-primary)',
-                  fontFamily: 'var(--font-body)',
-                  lineHeight: 1.5,
-                }}>
-                  {v.name}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <span
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 500,
+                    color: 'var(--text-primary)',
+                    fontFamily: "'General Sans', system-ui, sans-serif",
+                  }}
+                >
+                  {v.name || 'Jane Doe'}
                 </span>
                 {v.showSubLabel && (
-                  <span style={{
-                    fontSize: 14,
-                    fontWeight: 400,
-                    color: 'var(--text-tertiary)',
-                    fontFamily: 'var(--font-body)',
-                    lineHeight: 1.5,
-                  }}>
+                  <span
+                    style={{
+                      fontSize: 13,
+                      color: 'var(--text-tertiary)',
+                      fontFamily: "'General Sans', system-ui, sans-serif",
+                    }}
+                  >
                     {v.subLabel}
                   </span>
                 )}
@@ -221,53 +187,212 @@ export function AvatarPage() {
       <SectionHeader id="sizes" title="Sizes" />
       <Preview
         preview={
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <Avatar size="xs" initials="JD" />
-            <Avatar size="sm" initials="JD" />
-            <Avatar size="md" initials="JD" />
-            <Avatar size="lg" initials="JD" />
-            <Avatar size="xl" initials="JD" />
-            <Avatar size="2xl" initials="JD" />
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              gap: 16,
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+            }}
+          >
+            {ALL_SIZES.map((size) => (
+              <div
+                key={size}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}
+              >
+                <ZincAvatar name="Jane Doe" size={size} />
+                <span style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>{size}</span>
+              </div>
+            ))}
           </div>
         }
-        code={`<Avatar size="xs" initials="JD" />
-<Avatar size="sm" initials="JD" />
-<Avatar size="md" initials="JD" />
-<Avatar size="lg" initials="JD" />
-<Avatar size="xl" initials="JD" />
-<Avatar size="2xl" initials="JD" />`}
+        code={`<ZincAvatar name="Jane Doe" size="xxs" />
+<ZincAvatar name="Jane Doe" size="xs" />
+<ZincAvatar name="Jane Doe" size="sm" />
+<ZincAvatar name="Jane Doe" size="md" />
+<ZincAvatar name="Jane Doe" size="lg" />
+<ZincAvatar name="Jane Doe" size="xl" />
+<ZincAvatar name="Jane Doe" size="2xl" />`}
       />
 
-      {/* ── Initials ── */}
-      <SectionHeader id="initials" title="With initials" />
+      {/* ── Gradient only ── */}
+      <SectionHeader
+        id="gradient-only"
+        title="Gradient (no initials)"
+        subtitle="The default avatar — a deterministic hologram gradient seeded from the user's name. Same name always produces the same gradient."
+      />
       <Preview
         preview={
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <Avatar size="md" initials="OR" />
-            <Avatar size="md" initials="AB" />
-            <Avatar size="md" initials="ZW" />
+          <div
+            style={{
+              display: 'flex',
+              gap: 12,
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+            }}
+          >
+            {SAMPLE_NAMES.map((name) => (
+              <div
+                key={name}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
+              >
+                <ZincAvatar name={name} size="md" />
+                <span style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>
+                  {name.split(' ')[0]}
+                </span>
+              </div>
+            ))}
           </div>
         }
-        code={`<Avatar size="md" initials="OR" />
-<Avatar size="md" initials="AB" />
-<Avatar size="md" initials="ZW" />`}
+        code={`<ZincAvatar name="Jane Doe" size="md" />
+<ZincAvatar name="Marcus Hill" size="md" />
+<ZincAvatar name="Priya Nair" size="md" />`}
       />
 
-      {/* ── Status ── */}
-      <SectionHeader id="status" title="With status" />
+      {/* ── With initials ── */}
+      <SectionHeader
+        id="with-initials"
+        title="With initials"
+        subtitle="Add showInitials to overlay the user's initials on the gradient. Text uses General Sans Medium at a size relative to the avatar."
+      />
       <Preview
         preview={
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <Avatar size="md" initials="JD" status="online" />
-            <Avatar size="md" initials="JD" status="offline" />
-            <Avatar size="md" initials="JD" verified />
-            <Avatar size="md" initials="JD" border />
+          <div
+            style={{
+              display: 'flex',
+              gap: 12,
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+            }}
+          >
+            {SAMPLE_NAMES.map((name) => (
+              <div
+                key={name}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
+              >
+                <ZincAvatar name={name} size="md" showInitials />
+                <span style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>
+                  {name.split(' ')[0]}
+                </span>
+              </div>
+            ))}
           </div>
         }
-        code={`<Avatar size="md" initials="JD" status="online" />
-<Avatar size="md" initials="JD" status="offline" />
-<Avatar size="md" initials="JD" verified />
-<Avatar size="md" initials="JD" border />`}
+        code={`<ZincAvatar name="Jane Doe" size="md" showInitials />
+<ZincAvatar name="Marcus Hill" size="md" showInitials />
+<ZincAvatar name="Priya Nair" size="md" showInitials />`}
+      />
+
+      {/* ── With photo ── */}
+      <SectionHeader
+        id="with-photo"
+        title="With photo"
+        subtitle="When a src is provided, the photo renders instead of the gradient. The gradient is the fallback — no broken image states."
+      />
+      <Preview
+        preview={
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center', justifyContent: 'center' }}>
+            <ZincAvatar
+              name="Jane Doe"
+              src="https://i.pravatar.cc/150?img=47"
+              size="xl"
+            />
+            <ZincAvatar
+              name="Marcus Hill"
+              src="https://i.pravatar.cc/150?img=12"
+              size="xl"
+            />
+            <ZincAvatar
+              name="No Photo"
+              size="xl"
+            />
+          </div>
+        }
+        code={`{/* With photo */}
+<ZincAvatar name="Jane Doe" src="/path/to/photo.jpg" size="xl" />
+
+{/* Falls back to gradient */}
+<ZincAvatar name="Jane Doe" size="xl" />`}
+      />
+
+      {/* ── Label group ── */}
+      <SectionHeader
+        id="label-group"
+        title="Label group"
+        subtitle="Compose ZincAvatar with text for user identification labels."
+      />
+      <Preview
+        preview={
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {LABEL_GROUP_PEOPLE.map(({ name, sub }) => (
+              <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <ZincAvatar name={name} size="md" showInitials />
+                <div>
+                  <p
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 500,
+                      color: 'var(--text-primary)',
+                      margin: 0,
+                    }}
+                  >
+                    {name}
+                  </p>
+                  <p style={{ fontSize: 13, color: 'var(--text-tertiary)', margin: 0 }}>{sub}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        }
+        code={`<div className="flex items-center gap-3">
+  <ZincAvatar name="Jane Doe" size="md" showInitials />
+  <div>
+    <p className="text-sm font-medium">Jane Doe</p>
+    <p className="text-sm text-[var(--text-tertiary)]">Product Designer</p>
+  </div>
+</div>`}
+      />
+
+      {/* ── Avatar group ── */}
+      <SectionHeader
+        id="group"
+        title="Avatar group"
+        subtitle="Stack multiple avatars for team or participant displays."
+      />
+      <Preview
+        preview={
+          <div style={{ display: 'flex', marginLeft: 8 }}>
+            {GROUP_NAMES.map((name, i) => (
+              <div
+                key={name}
+                style={{ marginLeft: i === 0 ? 0 : -8, zIndex: GROUP_NAMES.length - i }}
+              >
+                <ZincAvatar
+                  name={name}
+                  size="md"
+                  showInitials
+                  className="ring-2 ring-[var(--bg-page)]"
+                />
+              </div>
+            ))}
+          </div>
+        }
+        code={`<div className="flex">
+  {users.map((user, i) => (
+    <div
+      key={user.name}
+      style={{ marginLeft: i === 0 ? 0 : -8, zIndex: users.length - i }}
+    >
+      <ZincAvatar
+        name={user.name}
+        size="md"
+        showInitials
+        className="ring-2 ring-[var(--bg-page)]"
+      />
+    </div>
+  ))}
+</div>`}
       />
 
       {/* ── Props ── */}

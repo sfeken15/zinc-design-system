@@ -15,7 +15,6 @@ import { Breadcrumb } from '@/docs/layout/breadcrumb';
 import { Button } from '@/components/Button';
 
 const SECTIONS = [
-  { id: 'overview', label: 'Overview' },
   { id: 'whats-included', label: "What's included" },
   { id: 'tech-stack', label: 'Tech stack' },
   { id: 'getting-started', label: 'Getting started' },
@@ -158,7 +157,7 @@ export function IntroductionPage() {
           fontSize: 28,
           fontWeight: 500,
           letterSpacing: '-0.02em',
-          margin: '0 0 8px',
+          margin: '0 0 16px',
           color: 'var(--text-primary)',
         }}
       >
@@ -168,16 +167,31 @@ export function IntroductionPage() {
         style={{
           fontSize: 16,
           color: 'var(--text-secondary)',
-          margin: '0 0 24px',
-          maxWidth: 560,
-          lineHeight: 1.6,
+          margin: 0,
+          maxWidth: 640,
+          lineHeight: 1.7,
         }}
       >
-        A React component library built for Explore Joplin — consistent, accessible, and ready to
-        ship.
+        Zinc is the design system that powers Explore Joplin's products. It provides a curated set
+        of React components, design tokens, and guidelines that keep every surface visually
+        cohesive — from marketing pages to dashboards to AI-powered tools.
+      </p>
+      <p
+        style={{
+          fontSize: 16,
+          color: 'var(--text-secondary)',
+          margin: '12px 0 0',
+          maxWidth: 640,
+          lineHeight: 1.7,
+        }}
+      >
+        Every component is built on React Aria, so keyboard navigation, focus management, and
+        screen reader support are handled out of the box. Styling uses Tailwind CSS v4 with a
+        layered token system — Graffiti, Blurple, and Zinc scales — that automatically adapts
+        between dark and light mode.
       </p>
 
-      <div style={{ display: 'flex', gap: 12, marginBottom: 40 }}>
+      <div style={{ display: 'flex', gap: 12, marginTop: 24, marginBottom: 40 }}>
         <Button variant="primary" size="md" onClick={() => navigate('/components/button')}>
           Browse components
         </Button>
@@ -190,90 +204,6 @@ export function IntroductionPage() {
         >
           View on GitHub ↗
         </Button>
-      </div>
-
-      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 48px' }} />
-
-      {/* ── Overview ── */}
-      <div id="overview" style={{ marginBottom: 48 }}>
-        <h2
-          style={{
-            fontSize: 20,
-            fontWeight: 500,
-            color: 'var(--text-primary)',
-            margin: '0 0 12px',
-            letterSpacing: '-0.01em',
-          }}
-        >
-          Overview
-        </h2>
-        <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.75, margin: 0 }}>
-          Zinc is the design system that powers Explore Joplin's products. It provides a curated
-          set of React components, design tokens, and guidelines that keep every surface visually
-          cohesive.
-        </p>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 16,
-            marginTop: 24,
-          }}
-        >
-          <div
-            style={{
-              ...cardStyle,
-              background: 'rgba(21, 183, 158, 0.08)',
-              borderLeft: '3px solid #15B79E',
-            }}
-          >
-            <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: '0 0 6px' }}>
-              Primary
-            </p>
-            <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 2px' }}>
-              Graffiti Teal
-            </p>
-            <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: 0, fontFamily: 'var(--font-mono)' }}>
-              #15B79E
-            </p>
-          </div>
-
-          <div
-            style={{
-              ...cardStyle,
-              background: 'rgba(104, 61, 238, 0.08)',
-              borderLeft: '3px solid #683DEE',
-            }}
-          >
-            <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: '0 0 6px' }}>
-              Secondary
-            </p>
-            <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 2px' }}>
-              Blurple
-            </p>
-            <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: 0, fontFamily: 'var(--font-mono)' }}>
-              #683DEE
-            </p>
-          </div>
-
-          <div
-            style={{
-              ...cardStyle,
-              borderLeft: '3px solid var(--border-strong)',
-            }}
-          >
-            <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: '0 0 6px' }}>
-              Neutral
-            </p>
-            <p style={{ fontSize: 16, fontWeight: 500, color: 'var(--text-primary)', margin: '0 0 2px' }}>
-              Zinc
-            </p>
-            <p style={{ fontSize: 12, color: 'var(--text-tertiary)', margin: 0, fontFamily: 'var(--font-mono)' }}>
-              #71717A
-            </p>
-          </div>
-        </div>
       </div>
 
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: '0 0 48px' }} />

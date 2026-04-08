@@ -43,6 +43,13 @@ const NAV = [
       { label: 'Tooltip', path: '/components/tooltip' },
     ],
   },
+  {
+    group: 'Custom Components',
+    dividerAbove: true,
+    items: [
+      { label: 'Media card', path: '/custom/media-card' },
+    ],
+  },
 ];
 
 export function Sidebar() {
@@ -135,12 +142,19 @@ export function Sidebar() {
 
           return (
             <div key={section.group}>
-              {/* Dotted divider before every section group */}
+              {/* Solid divider for custom sections, dotted for standard groups */}
               <div
-                style={{
-                  borderTop: '1px dotted var(--border-default)',
-                  margin: '10px 16px 14px',
-                }}
+                style={
+                  (section as any).dividerAbove
+                    ? {
+                        borderTop: '1px solid var(--border-default)',
+                        margin: '14px 0 14px',
+                      }
+                    : {
+                        borderTop: '1px dotted var(--border-default)',
+                        margin: '10px 16px 14px',
+                      }
+                }
               />
 
               {/* Accordion section header */}

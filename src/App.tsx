@@ -29,6 +29,7 @@ import { TogglePage } from '@/docs/pages/toggle-page';
 import { ProgressPage } from '@/docs/pages/progress-page';
 import { FileUploadPage } from '@/docs/pages/file-upload-page';
 import { FormPage } from '@/docs/pages/form-page';
+import { MediaCardPage } from '@/docs/pages/media-card-page';
 
 export default function App() {
   return (
@@ -64,6 +65,7 @@ export default function App() {
         <Route path="components/progress" element={<ProgressPage />} />
         <Route path="components/toggle" element={<TogglePage />} />
         <Route path="components/tooltip" element={<TooltipPage />} />
+        <Route path="custom/media-card" element={<MediaCardPage />} />
       </Route>
     </Routes>
   );

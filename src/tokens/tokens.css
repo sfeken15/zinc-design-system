@@ -167,21 +167,33 @@
        ------------------------------------------------------------------------- */
 
     /* Buttons — LIGHT MODE */
-    --btn-primary-bg:          #000000;
-    --btn-primary-bg-hover:    #1a1a1a;
-    --btn-primary-text:        #ffffff;
-    --btn-secondary-bg:        #f4f4f5;
-    --btn-secondary-bg-hover:  #e4e4e7;
-    --btn-secondary-text:      #09090b;
-    --btn-secondary-border:    transparent;
-    --btn-ghost-bg:            transparent;
-    --btn-ghost-bg-hover:      rgba(0, 0, 0, 0.04);
-    --btn-ghost-text:          #09090b;
-    --btn-ghost-border:        #d4d4d8;
-    --btn-accent-bg:           #0e9384;
-    --btn-accent-bg-hover:     #107569;
-    --btn-accent-text:         #ffffff;
-    --btn-radius:              0.75rem;
+    --btn-primary-bg:                    #000000;
+    --btn-primary-bg-hover:              #3f3f46;
+    --btn-primary-text:                  #ffffff;
+    --btn-secondary-bg:                  #f4f4f5;
+    --btn-secondary-bg-hover:            #e4e4e7;
+    --btn-secondary-text:                #09090b;
+    --btn-secondary-border:              transparent;
+    --btn-ghost-bg:                      transparent;
+    --btn-ghost-bg-hover:                rgba(0, 0, 0, 0.04);
+    --btn-ghost-text:                    #09090b;
+    --btn-ghost-border:                  #d4d4d8;
+    --btn-accent-bg:                     #0e9384;
+    --btn-accent-bg-hover:               #107569;
+    --btn-accent-text:                   #ffffff;
+    --btn-destructive-bg:                #e31b54;
+    --btn-destructive-bg-hover:          #be1244;
+    --btn-destructive-text:              #ffffff;
+    --btn-destructive-outline-bg:        transparent;
+    --btn-destructive-outline-bg-hover:  rgba(227, 27, 84, 0.08);
+    --btn-destructive-outline-border:    #e31b54;
+    --btn-destructive-outline-text:      #e31b54;
+    --btn-destructive-ghost-bg:          transparent;
+    --btn-destructive-ghost-bg-hover:    rgba(227, 27, 84, 0.08);
+    --btn-destructive-ghost-text:        #e31b54;
+    --btn-destructive-link-text:         #e31b54;
+    --btn-destructive-link-text-hover:   #be1244;
+    --btn-radius:                        0.75rem;
 
     /* Inputs */
     --input-bg:                var(--zinc-white);
@@ -312,20 +324,32 @@
     --color-info-text:      var(--azure-200);
 
     /* Buttons — DARK MODE */
-    --btn-primary-bg:          #ffffff;
-    --btn-primary-bg-hover:    #f4f4f5;
-    --btn-primary-text:        #09090b;
-    --btn-secondary-bg:        #27272a;
-    --btn-secondary-bg-hover:  #3f3f46;
-    --btn-secondary-text:      #ffffff;
-    --btn-secondary-border:    transparent;
-    --btn-ghost-bg:            transparent;
-    --btn-ghost-bg-hover:      rgba(255, 255, 255, 0.06);
-    --btn-ghost-text:          #ffffff;
-    --btn-ghost-border:        #3f3f46;
-    --btn-accent-bg:           #15b79e;
-    --btn-accent-bg-hover:     #0e9384;
-    --btn-accent-text:         #09090b;
+    --btn-primary-bg:                    #ffffff;
+    --btn-primary-bg-hover:              #d4d4d8;
+    --btn-primary-text:                  #09090b;
+    --btn-secondary-bg:                  #27272a;
+    --btn-secondary-bg-hover:            #3f3f46;
+    --btn-secondary-text:                #ffffff;
+    --btn-secondary-border:              transparent;
+    --btn-ghost-bg:                      transparent;
+    --btn-ghost-bg-hover:                rgba(255, 255, 255, 0.06);
+    --btn-ghost-text:                    #ffffff;
+    --btn-ghost-border:                  #3f3f46;
+    --btn-accent-bg:                     #15b79e;
+    --btn-accent-bg-hover:               #0e9384;
+    --btn-accent-text:                   #09090b;
+    --btn-destructive-bg:                #f63d68;
+    --btn-destructive-bg-hover:          #e31b54;
+    --btn-destructive-text:              #ffffff;
+    --btn-destructive-outline-bg:        transparent;
+    --btn-destructive-outline-bg-hover:  rgba(246, 61, 104, 0.12);
+    --btn-destructive-outline-border:    #f63d68;
+    --btn-destructive-outline-text:      #f63d68;
+    --btn-destructive-ghost-bg:          transparent;
+    --btn-destructive-ghost-bg-hover:    rgba(246, 61, 104, 0.12);
+    --btn-destructive-ghost-text:        #f63d68;
+    --btn-destructive-link-text:         #f63d68;
+    --btn-destructive-link-text-hover:   #e31b54;
 
     --input-bg:                rgba(255,255,255,0.04);
     --input-bg-focus:          rgba(255,255,255,0.06);
@@ -408,20 +432,32 @@
     --icon-brand:          var(--graffiti-500);
 
     /* Buttons — LIGHT MODE (explicit override) */
-    --btn-primary-bg:          #000000;
-    --btn-primary-bg-hover:    #1a1a1a;
-    --btn-primary-text:        #ffffff;
-    --btn-secondary-bg:        #f4f4f5;
-    --btn-secondary-bg-hover:  #e4e4e7;
-    --btn-secondary-text:      #09090b;
-    --btn-secondary-border:    transparent;
-    --btn-ghost-bg:            transparent;
-    --btn-ghost-bg-hover:      rgba(0, 0, 0, 0.04);
-    --btn-ghost-text:          #09090b;
-    --btn-ghost-border:        #d4d4d8;
-    --btn-accent-bg:           #0e9384;
-    --btn-accent-bg-hover:     #107569;
-    --btn-accent-text:         #ffffff;
+    --btn-primary-bg:                    #000000;
+    --btn-primary-bg-hover:              #3f3f46;
+    --btn-primary-text:                  #ffffff;
+    --btn-secondary-bg:                  #f4f4f5;
+    --btn-secondary-bg-hover:            #e4e4e7;
+    --btn-secondary-text:                #09090b;
+    --btn-secondary-border:              transparent;
+    --btn-ghost-bg:                      transparent;
+    --btn-ghost-bg-hover:                rgba(0, 0, 0, 0.04);
+    --btn-ghost-text:                    #09090b;
+    --btn-ghost-border:                  #d4d4d8;
+    --btn-accent-bg:                     #0e9384;
+    --btn-accent-bg-hover:               #107569;
+    --btn-accent-text:                   #ffffff;
+    --btn-destructive-bg:                #e31b54;
+    --btn-destructive-bg-hover:          #be1244;
+    --btn-destructive-text:              #ffffff;
+    --btn-destructive-outline-bg:        transparent;
+    --btn-destructive-outline-bg-hover:  rgba(227, 27, 84, 0.08);
+    --btn-destructive-outline-border:    #e31b54;
+    --btn-destructive-outline-text:      #e31b54;
+    --btn-destructive-ghost-bg:          transparent;
+    --btn-destructive-ghost-bg-hover:    rgba(227, 27, 84, 0.08);
+    --btn-destructive-ghost-text:        #e31b54;
+    --btn-destructive-link-text:         #e31b54;
+    --btn-destructive-link-text-hover:   #be1244;
 
     --input-bg:                var(--zinc-white);
     --input-border:            var(--zinc-200);

@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { DocsLayout } from '@/docs/layout/docs-layout';
 import { IntroductionPage } from '@/docs/pages/introduction-page';
+import { InstallationPage } from '@/docs/pages/installation-page';
 import { ColorsPage } from '@/docs/pages/colors-page';
 import { TypographyPage } from '@/docs/pages/typography-page';
 import { LogosPage } from '@/docs/pages/logos-page';
@@ -30,6 +31,7 @@ export default function App() {
       <Route path="/" element={<DocsLayout />}>
         <Route index element={<Navigate to="/introduction" replace />} />
         <Route path="introduction" element={<IntroductionPage />} />
+        <Route path="installation" element={<InstallationPage />} />
         <Route path="colors" element={<ColorsPage />} />
         <Route path="typography" element={<TypographyPage />} />
         <Route path="logos" element={<LogosPage />} />

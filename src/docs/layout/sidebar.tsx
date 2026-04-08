@@ -9,6 +9,7 @@ const NAV = [
   {
     group: 'Foundations',
     items: [
+      { label: 'Installation', path: '/installation' },
       { label: 'Colors', path: '/colors' },
       { label: 'Typography', path: '/typography' },
       { label: 'Icons', path: '/icons' },

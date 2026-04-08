@@ -189,7 +189,7 @@ export function ZincCardMedia({
         {/* Tag left — Badge component */}
         <div>
           {tag ? (
-            <Badge type="badge-color" size="sm" color={tagColor}>{tag}</Badge>
+            <Badge type="color" size="sm" color={tagColor}>{tag}</Badge>
           ) : (
             <div style={{ width: 4 }} />
           )}

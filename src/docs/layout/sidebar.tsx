@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { ChevronUp, Moon01, Sun, Palette, Star01, Image01, Ruler, Type01 } from '@untitledui/icons';
 import { LogoHologram, LogoBlack } from '@/components/logos/Logo';
 import { navItemClass } from '@/components/NavItem';
+import { Badge } from '@/components/Badge';
 import { useTheme } from '@/providers/theme-provider';
 import type { FC } from 'react';
 
@@ -10,6 +11,7 @@ interface NavItem {
   label: string;
   path: string;
   icon?: FC<{ style?: React.CSSProperties; className?: string }>;
+  badge?: string;
 }
 
 interface NavGroup {
@@ -29,12 +31,6 @@ const NAV: NavGroup[] = [
     ],
   },
   {
-    group: 'Custom Components',
-    items: [
-      { label: 'Media card', path: '/custom/media-card' },
-    ],
-  },
-  {
     group: 'Components',
     items: [
       { label: 'Overview',      path: '/components/overview' },
@@ -50,6 +46,7 @@ const NAV: NavGroup[] = [
       { label: 'File upload',   path: '/components/file-upload' },
       { label: 'Form',          path: '/components/form' },
       { label: 'Input',         path: '/components/input' },
+      { label: 'Media card',    path: '/custom/media-card',          badge: 'Custom' },
       { label: 'MultiSelect',   path: '/components/multi-select' },
       { label: 'Progress',      path: '/components/progress' },
       { label: 'RadioButton',   path: '/components/radio-button' },
@@ -204,14 +201,13 @@ export function Sidebar() {
                         to={item.path}
                         className={({ isActive }) => navItemClass(isActive)}
                       >
-                        {Icon ? (
+                        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                            <Icon style={{ width: 15, height: 15, flexShrink: 0, opacity: 0.7 }} />
+                            {Icon && <Icon style={{ width: 15, height: 15, flexShrink: 0, opacity: 0.7 }} />}
                             {item.label}
                           </span>
-                        ) : (
-                          item.label
-                        )}
+                          {item.badge && <Badge label={item.badge} variant="brand" />}
+                        </span>
                       </NavLink>
                     );
                   })}

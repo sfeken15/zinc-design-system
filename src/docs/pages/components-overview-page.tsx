@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Breadcrumb } from '@/docs/layout/breadcrumb';
+import { Badge } from '@/components/Badge';
 
 // ── Color constants (hex, for use inside SVG) ──────────────────────────────
 const T500 = '#15B79E'; // graffiti-500
@@ -647,7 +648,7 @@ function ComponentCard({
       <div
         style={{
           height: 160,
-          background: 'var(--bg-subtle)',
+          background: 'var(--bg-page)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -733,7 +734,7 @@ export function ComponentsOverviewPage() {
         <h1
           style={{
             fontSize: 28,
-            fontWeight: 600,
+            fontWeight: 500,
             color: 'var(--text-primary)',
             margin: '0 0 8px',
             letterSpacing: '-0.02em',
@@ -758,33 +759,7 @@ export function ComponentsOverviewPage() {
 
         {/* Stats row */}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-          <span
-            style={{
-              fontSize: 13,
-              color: 'var(--text-tertiary)',
-              background: 'var(--bg-subtle)',
-              border: '1px solid var(--border-default)',
-              borderRadius: 6,
-              padding: '3px 10px',
-              fontFamily: 'var(--font-body)',
-            }}
-          >
-            {BASE_COMPONENTS.length} components
-          </span>
-          <span
-            style={{
-              fontSize: 13,
-              color: 'var(--graffiti-700)',
-              background: 'var(--graffiti-100)',
-              border: '1px solid var(--graffiti-300)',
-              borderRadius: 6,
-              padding: '3px 10px',
-              fontWeight: 500,
-              fontFamily: 'var(--font-body)',
-            }}
-          >
-            Free
-          </span>
+          <Badge label={`${BASE_COMPONENTS.length} components`} variant="neutral" />
         </div>
       </div>
 

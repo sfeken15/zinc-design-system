@@ -37,6 +37,7 @@ const NAV: NavGroup[] = [
   {
     group: 'Components',
     items: [
+      { label: 'Overview',      path: '/components/overview' },
       { label: 'Avatar',        path: '/components/avatar' },
       { label: 'Badge',         path: '/components/badge' },
       { label: 'BadgeGroup',    path: '/components/badge-group' },

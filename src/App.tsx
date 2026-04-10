@@ -30,6 +30,7 @@ import { ProgressPage } from '@/docs/pages/progress-page';
 import { FileUploadPage } from '@/docs/pages/file-upload-page';
 import { FormPage } from '@/docs/pages/form-page';
 import { MediaCardPage } from '@/docs/pages/media-card-page';
+import { ComponentsOverviewPage } from '@/docs/pages/components-overview-page';
 
 export default function App() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="logos" element={<LogosPage />} />
         <Route path="spacing" element={<SpacingPage />} />
         <Route path="icons" element={<IconsPage />} />
+        <Route path="components/overview" element={<ComponentsOverviewPage />} />
         <Route path="components/featured-icon" element={<FeaturedIconPage />} />
         <Route path="components/avatar" element={<AvatarPage />} />
         <Route path="components/badge" element={<BadgePage />} />

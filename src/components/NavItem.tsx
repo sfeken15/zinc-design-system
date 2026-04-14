@@ -20,7 +20,7 @@ export function navItemClass(isActive: boolean, className?: string) {
     // Active state
     isActive
       ? 'bg-[var(--nav-item-active)] text-[var(--text-primary)]'
-      : 'text-[var(--text-tertiary)] hover:bg-[var(--zinc-900)] hover:text-[var(--text-secondary)]',
+      : 'text-[var(--text-tertiary)] hover:bg-[var(--nav-item-hover)] hover:text-[var(--text-secondary)]',
     className,
   );
 }

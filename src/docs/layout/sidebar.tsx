@@ -89,7 +89,7 @@ export function Sidebar() {
       {/* Fixed header — always visible */}
       <div
         style={{
-          padding: '20px',
+          padding: '20px 8px 20px 20px',
           flexShrink: 0,
           display: 'flex',
           alignItems: 'center',

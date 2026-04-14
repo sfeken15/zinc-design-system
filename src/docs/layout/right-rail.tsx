@@ -12,8 +12,7 @@ export function RightRail() {
           right: 0,
           top: 0,
           bottom: 0,
-          borderLeft: '1px solid var(--border-default)',
-        }}
+          }}
       />
     );
   }
@@ -27,7 +26,6 @@ export function RightRail() {
         top: 0,
         bottom: 0,
         padding: '48px 24px',
-        borderLeft: '1px solid var(--border-default)',
         overflowY: 'auto',
         background: 'var(--bg-page)',
       }}

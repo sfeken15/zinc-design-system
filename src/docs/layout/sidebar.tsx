@@ -79,7 +79,6 @@ export function Sidebar() {
         top: 0,
         left: 0,
         bottom: 0,
-        borderRight: '1px solid var(--border-default)',
         background: 'var(--bg-page)',
         display: 'flex',
         flexDirection: 'column',
